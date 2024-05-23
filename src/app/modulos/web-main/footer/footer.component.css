@@ -1,0 +1,36 @@
+.footer {
+  width: 100%;
+  background-color: #f8f9fa;
+  padding: 20px 0;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-top: 3em;
+}
+
+
+.footer p {
+  margin: 0;
+  font-size: 14px;
+  color: #6c757d;
+}
+
+.footer ul {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 0;
+  display: flex;
+  justify-content: center;
+}
+
+.footer ul li {
+  margin: 0 15px;
+}
+
+.footer ul li a {
+  text-decoration: none;
+  color: #007bff;
+}
+
+.footer ul li a:hover {
+  text-decoration: underline;
+}

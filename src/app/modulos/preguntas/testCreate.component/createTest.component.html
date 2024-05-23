@@ -1,0 +1,83 @@
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <!-- Título -->
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="display-4 text-primary border-bottom pb-2">Crear nuevo test</h1>
+      </div>
+
+      <!-- Formulario envuelto en un fondo monocromático -->
+      <div class="p-4 bg-light rounded shadow">
+        <form [formGroup]="testForm" (ngSubmit)="onSubmit($event)" class="needs-validation">
+          <!-- Nombre -->
+          <div class="form-group mb-3">
+            <label for="nombre" class="form-label">Nombre:</label>
+            <input type="text" class="form-control" id="nombre" formControlName="nombre" placeholder="Introduce el nombre">
+          </div>
+
+          <!-- Descripción -->
+          <div class="form-group mb-3">
+            <label for="descripcion" class="form-label">Descripción:</label>
+            <input type="text" class="form-control" id="descripcion" formControlName="descripcion" placeholder="Introduce la descripción">
+          </div>
+
+          <!-- Número de Preguntas -->
+          <div class="form-group mb-3">
+            <label for="numeroPreguntas" class="form-label">Número de Preguntas:</label>
+            <input type="number" class="form-control" id="numeroPreguntas" formControlName="numeroPreguntas">
+          </div>
+
+          <!-- Lista de Temas -->
+          <div class="form-group mb-3">
+            <label class="form-label">Lista de Temas:</label>
+            <div *ngFor="let control of listaTemas.controls; let i = index" class="form-check">
+              <input type="checkbox" class="form-check-input" [formControl]="toFormControl(control)" (change)="resetSelectedPreguntas()">
+              <label class="form-check-label">{{temas[i].nombre}}</label>
+            </div>
+          </div>
+
+          <!-- Visible -->
+          <div class="form-group mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="visible" formControlName="visible">
+            <label for="visible" class="form-check-label">Visible</label>
+          </div>
+
+          <!-- Preguntas Elegibles -->
+          <div class="form-group mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="preguntasElegibles" formControlName="preguntasElegibles" (change)="onCheckboxChange()">
+            <label for="preguntasElegibles" class="form-check-label">Preguntas Elegibles</label>
+          </div>
+
+          <!-- Fecha de Inicio -->
+          <div class="form-group mb-3">
+            <label for="fechaInicio" class="form-label">Fecha de Inicio:</label>
+            <input type="date" class="form-control" id="fechaInicio" formControlName="fechaInicio">
+          </div>
+
+          <!-- Fecha de Fin -->
+          <div class="form-group mb-3">
+            <label for="fechaFin" class="form-label">Fecha de Fin:</label>
+            <input type="date" class="form-control" id="fechaFin" formControlName="fechaFin">
+          </div>
+
+
+          <div *ngIf="testForm.get('preguntasElegibles')?.value" class="mt-4">
+            <h2>Preguntas Elegibles</h2>
+            <ul class="list-group">
+              <li class="list-group-item" *ngFor="let pregunta of elegiblePreguntas">
+                <input type="checkbox" 
+                  [disabled]="shouldDisableCheckbox(pregunta)"
+                  (change)="toggleSelection(pregunta)">
+                {{pregunta.enunciado}}
+              </li>
+            </ul>
+          </div>
+          
+          <button type="submit" class="btn btn-primary">Crear nuevo test</button>
+        </form>
+
+
+      </div>
+    </div>
+  </div>
+</div>

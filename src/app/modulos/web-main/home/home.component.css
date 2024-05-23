@@ -1,0 +1,14 @@
+/* home.component.css */
+.container {
+    max-width: 600px; /* Limita el ancho del contenedor para centrar el contenido */
+  }
+  
+  .btn-lg {
+    padding: 0.75rem 1.5rem; /* Ajusta el padding para botones más grandes */
+    font-size: 1.25rem; /* Tamaño de fuente más grande para los botones */
+  }
+  
+  .lead {
+    font-size: 1.2rem; /* Tamaño de fuente ligeramente más grande para el subtítulo */
+  }
+  

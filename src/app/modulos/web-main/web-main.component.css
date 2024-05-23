@@ -1,0 +1,47 @@
+.margin-left {
+    margin-left: 5%; /* Ajusta el valor según tus necesidades */
+    /* Otros estilos que quieras aplicar */
+  }
+
+.margin-right {
+    margin-right: 5%; /* Ajusta el valor según tus necesidades */
+    /* Otros estilos que quieras aplicar */
+  }
+
+  /* src/app/navbar/navbar.component.css */
+  .logo {
+    height: 5rem;
+    width: auto;
+  }
+
+
+
+  /* styles.css */
+.navbar-nav .nav-link {
+  color: #000;
+}
+
+/* .navbar .logo {
+  height: 40px; 
+  margin-right: 15px; 
+} */
+
+.navbar-toggler {
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+.navbar-nav .dropdown-menu {
+  right: 0;
+  left: auto;
+}
+
+.container-fluid.px-3 {
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
+}
+
+
+.logo {
+  height: 5rem;
+  width: auto;
+}

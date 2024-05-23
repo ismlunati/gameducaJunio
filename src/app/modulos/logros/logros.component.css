@@ -1,0 +1,10 @@
+
+
+  input.ng-invalid.ng-touched {
+    border: 1px solid red;
+  }
+  .tabla-fila {
+    transition: transform 0.3s ease-in-out;
+    transform-origin: center;
+  }
+
