@@ -54,7 +54,7 @@ export class ListadoTemasComponent implements OnInit {
   esProfesor():boolean{
 
     if (this.authService.getUserFromSessionStorage()?.roles[0].rolNombre== 'ROLE_ADMIN') {
-      console.log(this.authService.getUserFromSessionStorage()?.roles[0].rolNombre)
+      
       return true;
     } else {
 

@@ -9,7 +9,6 @@ export interface Reto {
     temporal:boolean;
     fechaInicio: Date;
     fechaFin: Date;
-    automatico:boolean;
     logro:Logro;
     alumnoRetos:AlumnoReto[];
 

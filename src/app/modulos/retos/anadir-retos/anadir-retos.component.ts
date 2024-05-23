@@ -16,7 +16,7 @@ import { forkJoin } from 'rxjs';
 export class AnadirRetosComponent implements OnInit {
 
   retoForm!: UntypedFormGroup;
-
+  crearEditar:string='Crear';
   logrosAsignatura!: Logro[];
   idAsignatura: number | null = null;
 
@@ -50,7 +50,6 @@ export class AnadirRetosComponent implements OnInit {
       temporal: new UntypedFormControl(false),
       fechaInicio: new UntypedFormControl({ value: '', disabled: true }),
       fechaFin: new UntypedFormControl({ value: '', disabled: true }),
-      automatico: new UntypedFormControl(false),
       logro: new UntypedFormControl('')
     });
 
@@ -72,6 +71,7 @@ export class AnadirRetosComponent implements OnInit {
       // Aquí va la lógica si existe id
       console.log(`El id es ${this.idAsignatura}`);
 
+      this.crearEditar="Editar"
 
 
 
@@ -90,7 +90,6 @@ export class AnadirRetosComponent implements OnInit {
           descripcion: this.reto.descripcion,
           puntosOtorgados: this.reto.puntosOtorgados,
           temporal: this.reto.temporal,
-          automatico: this.reto.automatico,
           logro: this.logrosAsignatura.find(l => l.id === this.reto.logro.id),
           fechaInicio:  this.reto.temporal? moment(this.reto.fechaInicio).format('YYYY-MM-DD') :'',
           fechaFin: this.reto.temporal? moment(this.reto.fechaFin).format('YYYY-MM-DD'):'' 

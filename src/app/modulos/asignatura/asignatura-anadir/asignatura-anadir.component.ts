@@ -11,7 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class AsignaturaAnadirComponent implements OnInit {
 
   asignaturaForm: UntypedFormGroup;
-
+  crearEditar:string='Crear';
   idAsignatura:number | null = null;
 
   asignatura!: Asignatura;
@@ -34,6 +34,7 @@ export class AsignaturaAnadirComponent implements OnInit {
       if (this.idAsignatura) {
         // Aquí va la lógica si existe id
         console.log(`El id es ${this.idAsignatura}`);
+        this.crearEditar="Editar"
 
         this.asignaturaService.getAsignaturaPorId(this.idAsignatura).subscribe(asignatura => {
           this.asignatura = asignatura;

@@ -23,7 +23,6 @@
             <th>Temporal</th>
             <th>Fecha de Inicio</th>
             <th>Fecha de Fin</th>
-            <th>Automatico</th>
             <th>Logro</th>
             <th *ngIf="esProfesor()">Eliminar</th>
             <th *ngIf="!esProfesor()">Unirse</th>
@@ -37,7 +36,6 @@
             <td>{{ reto.temporal }}</td>
             <td>{{ reto.fechaInicio | date:'yyyy-MM-dd' }}</td>
             <td>{{ reto.fechaFin  | date:'yyyy-MM-dd'}}</td>
-            <td>{{ reto.automatico }}</td>
             <td>{{ reto?.logro?.nombre }}</td>
             <td *ngIf="esProfesor()">
               <button class="btn btn-outline-danger" (click)="borrarReto(reto.id); $event.stopPropagation()">Eliminar</button>

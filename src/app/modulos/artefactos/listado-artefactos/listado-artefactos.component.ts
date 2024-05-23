@@ -120,7 +120,7 @@ export class ListadoArtefactosComponent implements OnInit {
   borrarArtefacto(idArtefacto: number): void {
     this.asignaturaService.borrarArtefacto(this.id, idArtefacto).subscribe(
       res => {
-        Swal.fire('Borrado',`Se ha borrado el artefacto ${this.artefactos.filter(x=> x.id=== idArtefacto)[0].nombre} con exito`,'success');
+        Swal.fire('Borrado', `Se ha borrado el artefacto ${this.artefactos.filter(x => x.id === idArtefacto)[0].nombre} con exito`, 'success');
 
         console.log('Asignatura borrada exitosamente');
         this.artefactos = this.artefactos.filter(tema => tema.id !== idArtefacto);
@@ -138,10 +138,15 @@ export class ListadoArtefactosComponent implements OnInit {
   comprarArtefacto(idArtefacto: number): void {
     this.asignaturaService.comprarArtefacto(this.id, idArtefacto).subscribe(
       res => {
-        console.log('Artefacto comprado exitosamente');
-        // Actualiza tu vista o haz algo tras la eliminación de la asignatura
-        Swal.fire('Compra',`Se ha realizado la compra del artefacto ${this.artefactos.filter(x=> x.id=== idArtefacto)[0].nombre} con exito`,'success');
-        this.getListaArtefactosAlumnos();
+        if (res.id != null) {
+          console.log('Artefacto comprado exitosamente');
+          // Actualiza tu vista o haz algo tras la eliminación de la asignatura
+          Swal.fire('Compra', `Se ha realizado la compra del artefacto ${this.artefactos.filter(x => x.id === idArtefacto)[0].nombre} con exito`, 'success');
+        } else {
+          Swal.fire('Compra', `No se ha completado la compra del artefacto ${this.artefactos.filter(x => x.id === idArtefacto)[0].nombre} con exito`, 'warning');
+
+
+        } this.getListaArtefactosAlumnos();
       },
       err => {
         console.error('Error comprando la asignatura', err);

@@ -3,7 +3,7 @@
         <tr>
             <th>Nombre</th>
             <th>Logro</th>
-            <th *ngIf="estadoSeleccionado?.toString() === 'EN_CURSO'">FINALZIAR</th>
+            <th *ngIf="estadoSeleccionado?.toString() === 'EN_CURSO'"></th>
         </tr>
     </thead>
     <tbody>
@@ -15,7 +15,7 @@
 
             <td *ngIf="estadoSeleccionado?.toString() === 'EN_CURSO'">
                 <button class="btn btn-primary"
-                    (click)="finalizarReto(reto); $event.stopPropagation()">Unirse Reto</button>
+                    (click)="finalizarReto(reto); $event.stopPropagation()">Finalizar</button>
             </td>
 
 

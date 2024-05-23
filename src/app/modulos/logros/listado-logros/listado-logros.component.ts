@@ -1,9 +1,11 @@
+import { filter } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { AsignaturaService } from 'src/app/modulos//asignatura/asignatura.service';
 import { Artefacto } from 'src/app/modulos/artefactos/model/Artefacto';
 import { Logro } from 'src/app/modulos/logros/model/Logro';
 import { AuthService } from 'src/app/modulos//usuario/auth.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-listado-logros',
@@ -13,7 +15,7 @@ import { AuthService } from 'src/app/modulos//usuario/auth.service';
 })
 export class ListadoLogrosComponent implements OnInit {
 
-
+  navigationSubscription!: Subscription;
   id!: number;
   logros: Logro[] = [];
   artefactos: Artefacto[] = [];
@@ -23,26 +25,29 @@ export class ListadoLogrosComponent implements OnInit {
     private authService:AuthService, private router:Router) { }
 
   ngOnInit(): void {
-    console.log("id asignatura", this.route.snapshot.parent?.paramMap.get('id'))
-    
-    this.id= +this.route.snapshot.parent?.paramMap.get('id')!;
+    this.id = +this.route.snapshot.parent?.paramMap.get('id')!;
+    this.loadLogros();
 
-    
- 
-    // this.asignaturaService.getArtefactosPorAsignatura(this.id).subscribe(artefactos => {
-    //   this.artefactos = artefactos;
-    //   console.log("procedo a imprimir los artefactos",this.artefactos);
-    //   //console.log("Estoy imprimiendo el valor de alumno", this.alumno);
-    // });
-
-    this.asignaturaService.getLogrosPorAsignatura(this.id).subscribe(logros => {
-      this.logros = logros;
-      console.log("procedo a imprimir los logros",this.logros);
-      //console.log("Estoy imprimiendo el valor de alumno", this.alumno);
+    this.navigationSubscription = this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd && this.router.url.includes('/listado'))
+    ).subscribe(() => {
+      this.loadLogros();
     });
    
 
   }
+  ngOnDestroy(): void {
+    if (this.navigationSubscription) {
+      this.navigationSubscription.unsubscribe();
+    }
+  }
+  loadLogros(): void {
+    this.asignaturaService.getLogrosPorAsignatura(this.id).subscribe(logros => {
+      this.logros = logros;
+      console.log("procedo a imprimir los logros", this.logros);
+    });
+  }
+
 
   getNombreArtefacto(artefactoId: number): string {
     const artefacto = this.artefactos.find(a => a.id === artefactoId);

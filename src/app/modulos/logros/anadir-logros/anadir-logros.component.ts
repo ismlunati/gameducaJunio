@@ -19,7 +19,7 @@ export class AnadirLogrosComponent implements OnInit {
   selectedFile: File | null = null;
 
   idAsignatura: number | null = null;
-
+  crearEditar:string='Crear';
   idLogro: number | null = null;
 
   logro!: Logro;
@@ -69,20 +69,21 @@ export class AnadirLogrosComponent implements OnInit {
     console.log("Este es el id del logro", this.idLogro);
 
 
-    // this.asignaturaService.getArtefactosPorAsignatura(this.idAsignatura).subscribe(artefactos => {
-    //   this.artefactosAsignatura = artefactos;
+    this.asignaturaService.getArtefactosPorAsignatura(this.idAsignatura).subscribe(artefactos => {
+      this.artefactosAsignatura = artefactos;
 
-    //   console.log("Procedo a imprimir los artefactos disponibles", artefactos);
+      console.log("Procedo a imprimir los artefactos disponibles", artefactos);
 
 
 
-    // });
+    });
     // console.log("artefactos", this.artefactosAsignatura);
 
     if (this.idLogro !== 0) {
       // Aquí va la lógica si existe id
       console.log(`El id es ${this.idAsignatura}`);
 
+      this.crearEditar="Editar"
 
       forkJoin({
         logro: this.asignaturaService.getLogroPorId(this.idAsignatura, this.idLogro),
@@ -111,30 +112,13 @@ export class AnadirLogrosComponent implements OnInit {
 
         console.log("logro patched", this.logroForm.value)
 
-
-
-
-
       })
-
-
-
-
-        
-
-      
 
 
     } else {
       // Aquí va la lógica si no existe id
 
-
-
-
     }
-
-
-
 
 
   }

@@ -18,7 +18,7 @@ export class AnadirTemaComponent implements OnInit {
   idAsignatura: number | null = null;
 
   idTema: number | null = null;
-
+  crearEditar:string='Crear';
   tema!: Tema;
   asignatura!: Asignatura;
 
@@ -42,9 +42,10 @@ export class AnadirTemaComponent implements OnInit {
 
     console.log("Este es el id del tema", this.idTema);
 
-    if (this.idAsignatura) {
+    if (this.idTema) {
       // Aquí va la lógica si existe id
       console.log(`El id es ${this.idAsignatura}`);
+      this.crearEditar="Editar"
 
       this.asignaturaService.getTemaPorId(this.idAsignatura, this.idTema).subscribe(tema => {
         this.tema = tema;
