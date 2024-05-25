@@ -3,10 +3,13 @@ import { Usuario } from '../../usuario/model/Usuario.interface';
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router, Event  } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { filter } from 'rxjs/operators';
 import { AuthService } from 'src/app/modulos/usuario/auth.service';
 import { UsuarioService } from 'src/app/modulos/usuario/usuario.service';
 import Swal from 'sweetalert2';
+import { MatDialog } from '@angular/material/dialog';
+import { PerfilComponent } from '../perfil/perfil.component';
+
+
 
 
 @Component({
@@ -30,7 +33,9 @@ export class MenuComponent implements OnInit {
   constructor(public service:UsuarioService,
     private router:Router, 
     private authService: AuthService,
-    private navService: NavService) { }
+    private navService: NavService,
+    public dialog: MatDialog
+    ) { }
   
   ngOnInit(): void {
 
@@ -73,6 +78,17 @@ export class MenuComponent implements OnInit {
 
   }
 
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(PerfilComponent, {
+      width: '70%',
+      height:'70%'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('El diálogo se cerró');
+    });
+  }
 
   estaLogeado():boolean{
 

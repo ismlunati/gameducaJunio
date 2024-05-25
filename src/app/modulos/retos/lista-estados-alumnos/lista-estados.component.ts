@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AsignaturaService } from 'src/app/modulos//asignatura/asignatura.service';
 import { AlumnoRetoDTO } from 'src/app/modulos/retos/model/AlumnoRetoDTO';
@@ -17,6 +17,7 @@ export class ListaEstadosComponent implements OnInit {
   @Input() retosAsignados?: AlumnoRetoDTO[];
 
   @Input() estadoSeleccionado?: EstadoReto;
+  @Output() recargarRetos = new EventEmitter<String>();
 
   retosResultado!: Reto[];
 
@@ -63,6 +64,7 @@ export class ListaEstadosComponent implements OnInit {
       res => {
         console.log('Unido a reto exitosamente');
         Swal.fire('Inscripcion', `Se ha realizado la inscripción al reto ${nombreReto} con exito`, 'success');
+        this.recargarRetos.emit();
         // Actualiza tu vista o haz algo tras la eliminación de la asignatura
       },
       err => {
@@ -79,6 +81,7 @@ export class ListaEstadosComponent implements OnInit {
         console.log('Unido a reto exitosamente');
         Swal.fire('Inscripcion', `Se ha realizado la inscripción al reto ${reto.nombre} con exito`, 'success');
         // Actualiza tu vista o haz algo tras la eliminación de la asignatura
+        this.recargarRetos.emit();
       },
       err => {
         Swal.fire('Inscripcion', `No se ha podido realizar la inscripción al reto "${reto.nombre}" con exito`, 'error');

@@ -16,7 +16,7 @@ import { AuthService } from 'src/app/modulos//usuario/auth.service';
 export class AnadirLogrosComponent implements OnInit {
 
   logroForm: UntypedFormGroup;
-  selectedFile: File | null = null;
+ 
 
   idAsignatura: number | null = null;
   crearEditar:string='Crear';
@@ -24,7 +24,8 @@ export class AnadirLogrosComponent implements OnInit {
 
   logro!: Logro;
 
-
+  base64Image: string | undefined;
+  selectedFile: File | null = null;
 
   artefactosAsignatura!: Artefacto[];
 
@@ -84,7 +85,7 @@ export class AnadirLogrosComponent implements OnInit {
       console.log(`El id es ${this.idAsignatura}`);
 
       this.crearEditar="Editar"
-
+      
       forkJoin({
         logro: this.asignaturaService.getLogroPorId(this.idAsignatura, this.idLogro),
         artefactos:this.asignaturaService.getArtefactosPorAsignatura(this.idAsignatura)
@@ -96,6 +97,7 @@ export class AnadirLogrosComponent implements OnInit {
         console.log("Estos son los artefactos", artefactos);
         console.log("Estos es logro", logro);
         console.log("valor del find", this.artefactosAsignatura.find(a=> a.id==this.logro.artefactoLogros.artefacto.id));
+        this.base64Image=logro?.imagen;
 
         this.logroForm.patchValue({
           nombre: this.logro.nombre,
@@ -173,19 +175,19 @@ export class AnadirLogrosComponent implements OnInit {
     console.log("artefactoLogros que se postea", artefactoLogros);
     const logroPost: Logro = {
       ...formValues,  // Esto copia los valores de nombre, descripcion, etc. del formulario
-      artefactoLogros: artefactoLogros
+      artefactoLogros: artefactoLogros,
+      imagen: this.base64Image
     };
 
 
-    console.log("Logro posteado", logroPost)
 
-    if (this.selectedFile) {
-      const reader = new FileReader();
-      reader.readAsDataURL(this.selectedFile);
-      reader.onload = () => {
-        logroPost.imagen = reader.result as string;
-      }
-    }
+
+
+
+
+
+
+    console.log("fomData", logroPost);
 
     //en vez de mandar this.logroForm.value voy a mandar logro
     this.asignaturaService.crearLogro(logroPost, this.idAsignatura!)
@@ -196,52 +198,39 @@ export class AnadirLogrosComponent implements OnInit {
   }
 
 
-  // crearLogro1(): void {
-
-  //   const formValues = this.logroForm.value;
-  //   console.log("artefactoIDBD", this.artefactosAsignatura[0].id);
-  //   const selectedArtefacto = this.artefactosAsignatura.find(artefacto => artefacto.id === formValues.artefactoLogros.artefacto);
-
-  //   console.log("Artefacts", this.artefactosAsignatura);
-  //   console.log("Form Values", formValues.artefactoLogros.artefacto);
-  //   console.log("Selected artefacto", selectedArtefacto);
-
-  //   let artefactoLogros: ArtefactoLogro | null = null; // asigna null como valor por defecto
-
-  //   if (selectedArtefacto !== undefined) {
-  //     artefactoLogros = {
-  //       ...formValues.artefactoLogro // Esto copia los valores de desbloquear y obtener del formulario
-  //     }
-  //     artefactoLogros!.artefacto = selectedArtefacto;
-
-
-  //     console.log("artefacto logros", artefactoLogros);
-  //   }
-
-  //   console.log("selectedArtefacto", selectedArtefacto);
-
-
-  //   const logroPost: Logro = {
-  //     ...formValues, // Esto copia los valores de nombre, descripcion, etc. del formulario
-  //     artefactoLogros: artefactoLogros // este será null si selectedArtefacto es undefined
-  //   };
-
-  //   console.log("Logro posteado", logroPost);
-
-  //   this.asignaturaService.crearLogro(logroPost, this.idAsignatura!)
-  //     .subscribe((logro: Logro) => {
-  //       console.log('logro creada', logro);
-  //       // Aquí podrías redirigir al usuario, actualizar la lista de asignaturas, etc.
-  //     });
-  // }
 
 
   actualizarLogro(): void {
-    console.log("actualizando");
-    Object.assign(this.logro, this.logroForm.value);
+    console.log("actualizando", this.logroForm.value);
+    //Object.assign(this.logro, this.logroForm.value);
+
+    const formValues = this.logroForm.value;
+    const selectedArtefacto = this.artefactosAsignatura.find(artefacto => artefacto.id === +formValues.artefactoLogros.artefacto);
+
+    let artefactoLogros: ArtefactoLogro | null = null; // asigna null como valor por defecto
 
 
-    this.asignaturaService.actualizarLogro(this.logro, this.idAsignatura!)
+    if (selectedArtefacto !== undefined) {
+      artefactoLogros = {
+        ...formValues.artefactoLogro // Esto copia los valores de desbloquear y obtener del formulario
+      }
+      artefactoLogros!.artefacto = selectedArtefacto;
+
+
+      console.log("artefacto logros", artefactoLogros);
+    }
+
+    const logroPost: Logro = {
+      id: this.logro.id,
+      ...formValues,  // Esto copia los valores de nombre, descripcion, etc. del formulario
+      artefactoLogros: artefactoLogros,
+      imagen: this.base64Image
+    };
+
+    console.log("idasignatura", this.idAsignatura);
+
+
+    this.asignaturaService.actualizarLogro(logroPost, this.idAsignatura!)
       .subscribe((logroCreado: Logro) => {
         console.log('Logro actualizado', logroCreado);
         // Aquí podrías redirigir al usuario, actualizar la lista de asignaturas, etc.
@@ -280,8 +269,17 @@ export class AnadirLogrosComponent implements OnInit {
   }
 
 
-  onFileSelected(event: any) {
-    this.selectedFile = event.target.files[0];
+
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedFile = input.files[0];
+      const reader = new FileReader();
+      reader.readAsDataURL(this.selectedFile);
+      reader.onload = () => {
+        this.base64Image = reader.result as string;
+      };
+    }
   }
 
 }

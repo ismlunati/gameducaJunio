@@ -3,13 +3,21 @@
     <h1 class="display-4 text-primary title-styled">Lista de Retos</h1>
   </div>
 
-  <select [(ngModel)]="estadoSeleccionado" *ngIf="listaSeleccionada ==='Retos inscritos'"  (change)="onSelectChange()">
-    <option *ngFor="let estado of estados" [value]="estado">{{getEstadoValor(estado)}}</option>
-  </select>
-  
-  <select [(ngModel)]="listaSeleccionada" (change)="onSelectListChange()">
-    <option *ngFor="let lista of listas" [value]="lista">{{lista}}</option>
-  </select>
+
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <select class="form-control" [(ngModel)]="listaSeleccionada" (change)="onSelectListChange()">
+        <option *ngFor="let lista of listas" [value]="lista">{{ lista }}</option>
+      </select>
+    </div>
+    <div class="col-md-6" *ngIf="listaSeleccionada === 'Retos inscritos'">
+      <select class="form-control" [(ngModel)]="estadoSeleccionado" (change)="onSelectChange()">
+        <option *ngFor="let estado of estados " [value]="estado">{{ getEstadoReto(estado) }}</option>
+      </select>
+    </div>
+  </div>
+
+
   
   
   <div class="row">
@@ -47,6 +55,7 @@
         </tbody>
       </table>
       <app-lista-estados *ngIf="listaSeleccionada ==='Retos inscritos' && !esProfesor()"
+      (recargarRetos)="recargarListaRetos()"
       [retosAsignados]="retosUsuario"
       [estadoSeleccionado]="estadoSeleccionado"
       ></app-lista-estados>

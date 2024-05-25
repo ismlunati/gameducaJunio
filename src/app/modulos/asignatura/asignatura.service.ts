@@ -1,3 +1,4 @@
+import { tap } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -295,7 +296,9 @@ export class AsignaturaService {
       })
     };
     
-    return this.http.post<Logro>(`${this.urlApi}/${id}/logros`, logro, httpOptions);
+    return this.http.post<Logro>(`${this.urlApi}/${id}/logros`, logro, httpOptions).pipe(
+      tap(() => console.log('FormData enviado'))
+    );
   }
 
   crearReto(reto: Reto, id:number): Observable<Reto> {
@@ -357,7 +360,7 @@ export class AsignaturaService {
       })
     };
 
-    console.log("Imprimo logro actualizandose", logro);
+    console.log("Imprimo logro actualizandose", logro, "asignatura", idAsignatura);
     
     return this.http.put<Logro>(`${this.urlApi}/${idAsignatura}/logros/${logro.id}`, logro, httpOptions);
   }

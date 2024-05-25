@@ -39,8 +39,13 @@
                 <option *ngFor="let artefacto of artefactosAsignatura" [value]="artefacto.id">{{ artefacto.nombre }}</option>
               </select>
             </div>
-
-            <input type="file" (change)="onFileSelected($event)" />
+            <div class="mb-3">
+              <label for="imagen" class="form-label">Imagen</label>
+              <input type="file" id="imagen" (change)="onFileSelected($event)" />
+              <div *ngIf="base64Image">
+                <img [src]="base64Image" alt="Imagen del Logro" style="max-width: 100%; height: auto;" />
+              </div>
+            </div>
 
 
           </div>
@@ -48,8 +53,8 @@
 
           
           <button type="submit" class="btn btn-primary" *ngIf="esProfesor()">
-            <span *ngIf="idLogro!==0">Actualizar Asignatura</span>
-            <span *ngIf="idLogro==0">Crear Asignatura</span>
+            <span *ngIf="idLogro!==0">Actualizar Logro</span>
+            <span *ngIf="idLogro==0">Crear Logro</span>
         </button>
           <button type="button" style="margin-left: 20px;" class="btn btn-secondary ml-10" [routerLink]="['/asignaturas',idAsignatura,'logros','listado']">Volver</button>
         </form>

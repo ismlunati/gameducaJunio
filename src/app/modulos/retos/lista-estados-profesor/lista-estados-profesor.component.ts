@@ -120,6 +120,7 @@ export class ListaEstadosProfesorComponent implements OnInit {
         console.log('reto aceptado');
         //this.retos = this.retos.filter(reto => reto.id !== idReto);
         // Actualiza tu vista o haz algo tras la eliminación de la asignatura
+        this.recargarRetos.emit();
       },
       err => {
         Swal.fire('Reto aceptado', `Error aceptando el reto ${idAlumnoReto}`, 'error');
@@ -137,6 +138,7 @@ export class ListaEstadosProfesorComponent implements OnInit {
         console.log('reto rechazado');
         //this.retos = this.retos.filter(reto => reto.id !== idReto);
         // Actualiza tu vista o haz algo tras la eliminación de la asignatura
+        this.recargarRetos.emit();
       },
       err => {
         Swal.fire('Reto rechazado', `Error rechazando el reto ${idAlumnoReto}`, 'error');
