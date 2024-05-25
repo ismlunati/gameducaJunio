@@ -1,0 +1,13 @@
+.card-header {
+    background-color: hsl(227, 75%, 88%);
+    color: white;
+  }
+  
+  .card-body {
+    background-color: #f8f9fa;
+  }
+  
+  .list-group-item {
+    background-color: transparent;
+  }
+  

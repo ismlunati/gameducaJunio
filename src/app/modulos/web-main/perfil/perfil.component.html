@@ -1,0 +1,78 @@
+<h1 mat-dialog-title>Perfil de Usuario</h1>
+<div mat-dialog-content>
+  <div class="container mt-3">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="form-group">
+          <label for="asignatura">Selecciona una asignatura:</label>
+          <select id="asignatura" class="form-control" [(ngModel)]="asignaturaSeleccionada">
+            <option *ngFor="let asignatura of asignaturas" [value]="asignatura.id">{{ asignatura.nombre }}</option>
+          </select>
+        </div>
+        <button class="btn btn-primary mt-3" (click)="buscarPerfil()" *ngIf="asignaturaSeleccionada != 0">Buscar</button>
+      </div>
+    </div>
+
+    <!-- Tarjeta de perfil -->
+    <div *ngIf="perfil" class="row justify-content-center mt-5">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header text-center">
+            <h2>{{ perfil.nombreReal }}</h2>
+            <h4 class="text-muted">{{ perfil.nombreUsuario }}</h4>
+          </div>
+          <div class="card-body">
+            <form [formGroup]="perfilForm" (ngSubmit)="guardarPerfil()">
+              <div class="form-group text-center">
+
+
+                <div *ngIf="base64Image">
+                  <img [src]="base64Image" alt="Imagen del Logro" class="img-thumbnail" style="width: 150px; height: 150px; object-fit: cover; border-radius: 50%;" />
+                </div>
+                <div *ngIf="!base64Image">
+                  <img [src]="'assets/images/sin-foto-perfil.jpg'" alt="Foto de perfil" class="img-thumbnail" style="width: 150px; height: 150px; object-fit: cover; border-radius: 50%;">
+                </div>
+                <div class="mt-2">
+                  <input type="file" id="fotoPerfil" (change)="onFileSelected($event)" hidden>
+                  <button type="button" class="btn btn-secondary" (click)="cambiarFotoPerfil()">Cambiar Foto de Perfil</button>
+                </div>
+                
+              </div>
+              <div class="form-group">
+                <label for="nombreUsuario">Nombre de Usuario</label>
+                <input type="text" id="nombreUsuario" class="form-control" formControlName="nombreUsuario">
+              </div>
+              <div class="form-group">
+                <label for="nombreReal">Nombre Real</label>
+                <input type="text" id="nombreReal" class="form-control" formControlName="nombreReal">
+              </div>
+              <div class="form-group">
+                <label for="puntos">Puntos</label>
+                <input type="text" id="puntos" class="form-control" formControlName="puntos" readonly>
+              </div>
+              <h5>Logros</h5>
+              <ul class="list-group list-group-flush">
+                <li *ngFor="let logro of perfil.listaLogros" class="list-group-item d-flex align-items-center">
+                  <span>{{ logro.descripcion }}</span>
+                  <img *ngIf="logro.imagen" [src]="logro.imagen" alt="Logro imagen" class="ml-3" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;">
+                </li>
+              </ul>
+              <h5 class="mt-3">Artefactos</h5>
+              <ul class="list-group list-group-flush">
+                <li *ngFor="let artefacto of perfil.listaArtefactos" class="list-group-item">
+                  {{ artefacto.nombre }}
+                </li>
+              </ul>
+              <div class="text-center mt-4">
+                <button type="submit" class="btn btn-success">Guardar Cambios</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="closeDialog()">Cerrar</button>
+</div>
