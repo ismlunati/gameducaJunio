@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { trigger, state, style, transition, animate, query, stagger } from '@angular/animations';
 import { InfoDialogComponent } from '../info-dialog/info-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { InformacionEnum } from '../model/InformacionEnum';
 
 
 @Component({
@@ -53,7 +54,7 @@ export class PreguntasPorAlumnosComponent implements OnInit {
   openInfoDialog() {
     this.dialog.open(InfoDialogComponent, {
       data: {
-        message: 'Esta aplicación te permite gestionar tus tareas de manera eficiente. Puedes agregar, editar y eliminar tareas, así como asignarles prioridades y fechas límite.'
+        message: InformacionEnum.PreguntasPorAlumnos
       }
     });
   }

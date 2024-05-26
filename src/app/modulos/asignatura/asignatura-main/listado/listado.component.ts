@@ -37,7 +37,7 @@ export class ListadoComponent implements OnInit {
           this.router.navigate(['/asignaturas', asignatura.id]);
           this.navService.setSubject(asignatura.nombre);
         }else{
-          Swal.fire('Acceso', `No se ha podido acceder a la asignatura ${asignatura.nombre} `, 'error');
+          Swal.fire('Acceso', `No se ha podido acceder a la asignatura ${asignatura.nombre} porque el profesor aún no ha aceptado la petición`, 'error');
 
         }
 

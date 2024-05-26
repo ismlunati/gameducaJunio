@@ -5,6 +5,7 @@ import { trigger, state, style, transition, animate, query, stagger } from '@ang
 import { EstadisticasPreguntasPorTemasDTO } from '../model/EstadisticasPreguntasPorTemasDTO';
 import { MatDialog } from '@angular/material/dialog';
 import { InfoDialogComponent } from '../info-dialog/info-dialog.component';
+import { InformacionEnum } from '../model/InformacionEnum';
 
 
 @Component({
@@ -55,7 +56,7 @@ export class PreguntasPorTemaComponent implements OnInit {
   openInfoDialog() {
     this.dialog.open(InfoDialogComponent, {
       data: {
-        message: 'Esta aplicación te permite gestionar tus tareas de manera eficiente. Puedes agregar, editar y eliminar tareas, así como asignarles prioridades y fechas límite.'
+        message: InformacionEnum.PreguntasPorAlumnos
       }
     });
   }

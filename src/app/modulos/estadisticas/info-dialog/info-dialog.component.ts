@@ -10,7 +10,9 @@ export class InfoDialogComponent {
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: { message: string },
   private dialogRef: MatDialogRef<InfoDialogComponent>
-) {}
+) {
+  console.log("data",this.data)
+}
 
 
 
