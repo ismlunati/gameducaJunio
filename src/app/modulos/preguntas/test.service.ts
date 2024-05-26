@@ -54,31 +54,31 @@ export class TestService {
 
 
 
-  crearPregunta(idAsignatura: number, idTema: number, formValue: any): Observable<Pregunta> {
-
-    const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
-    });
-
-    const url = `${this.baseUrl}/${idAsignatura}/temas/${idTema}/crearPregunta`;
-
-    const { pregunta, respuestas, respuestaCorrecta } = formValue;
-
-    const respuestasString = respuestas.join(',');
-
-
-    const body = pregunta;
-    const params = {
-      respuestas: respuestasString,
-      respuestaCorrecta: respuestaCorrecta
-    };
-
-
-    return this.http.post<Pregunta>(url, body, { headers, params });
-  }
-
+    crearPregunta(idAsignatura: number, idTema: number, formValue: any): Observable<Pregunta> {
+      const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
+      
+      // Verifica si el token existe
+      if (!token) {
+        throw new Error('No se encontró un token de autorización');
+      }
+  
+      const { enunciado, respuestas, respuestaCorrecta } = formValue;
+      const respuestasString = respuestas.join(',');
+  
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      });
+  
+      const params = new HttpParams()
+        .set('enunciado', enunciado)
+        .set('respuestas', respuestasString)
+        .set('respuestaCorrecta', respuestaCorrecta);
+  
+      const url = `${this.baseUrl}/${idAsignatura}/temas/${idTema}/crearPregunta`;
+  
+      return this.http.post<Pregunta>(url, {}, { headers, params });
+    }
 
 
   createTest(testData: Test, selectedPreguntaIds: string, selectedTemasIds: string): Observable<any> {

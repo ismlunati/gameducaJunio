@@ -14,6 +14,8 @@ import { CrearTierComponent } from './crear-tier/crear-tier.component';
 import { CdkDrag, CdkDropList, DragDropModule } from '@angular/cdk/drag-drop';
 import { TierListEditorComponent } from './tier-list-editor/tier-list-editor.component';
 import { TierListComponent } from './tier-list/tier-list.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { InfoDialogComponent } from './info-dialog/info-dialog.component';
 
 
 
@@ -28,7 +30,8 @@ import { TierListComponent } from './tier-list/tier-list.component';
     PreguntasReportadasComponent,
     CrearTierComponent,
     TierListEditorComponent,
-    TierListComponent  ],
+    TierListComponent,
+   InfoDialogComponent  ],
   imports: [
     CommonModule,
     RouterModule,
@@ -37,7 +40,8 @@ import { TierListComponent } from './tier-list/tier-list.component';
     RouterModule.forChild(estadisticasRoutes),
     DragDropModule,
     CdkDropList,
-    CdkDrag
+    CdkDrag,
+    MatDialogModule
     
   ],
   exports:[
@@ -50,7 +54,8 @@ import { TierListComponent } from './tier-list/tier-list.component';
     PreguntasReportadasComponent,
     CrearTierComponent,
     TierListEditorComponent,
-    TierListComponent 
+    TierListComponent ,
+    InfoDialogComponent
     ]
 })
 export class EstadisticasModule { }

@@ -21,7 +21,7 @@
             <td>{{tema.nombre}}</td>
             <td>{{tema.descripcion}}</td>
             <td *ngIf="esProfesor()">
-              <button class="btn btn-outline-danger btn-sm" (click)="borrarTema(tema.id); $event.stopPropagation()">Eliminar</button>
+              <button class="btn btn-outline-danger btn-sm" (click)="borrarTema(tema); $event.stopPropagation()">Eliminar</button>
             </td>
             <td *ngIf="!esProfesor()">
               <button 
@@ -46,12 +46,14 @@
       </div>
 
       <!-- Botones -->
-      <div class="mt-3">
+      <div class="d-flex gap-2 mt-3">
         <button class="btn btn-secondary" [routerLink]="['/asignaturas', id]">Volver</button>
+        <button class="btn btn-success" *ngIf="esProfesor()" [routerLink]="['/asignaturas', id,'temas','añadir']">Añadir</button>
       </div>
-      <div class="mt-3" *ngIf="esProfesor()">
-        <button class="btn btn-success" [routerLink]="['/asignaturas', id,'temas','añadir']">Añadir</button>
-      </div>
+
+
+
+
     </div>
   </div>
 </div>

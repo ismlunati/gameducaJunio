@@ -32,6 +32,21 @@ export class AsignaturaService {
     return this.http.get<Asignatura[]>(this.urlApi, httpOptions); // Asegúrate de usar tu URL correcta
   }
 
+
+  getAsignatura(idAsignatura:number): Observable<Asignatura> {
+
+    const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': `Bearer ${token}`
+      })
+    };
+
+    console.log("entrandod", `${this.urlApi}/${idAsignatura}`)
+    return this.http.get<Asignatura>(`${this.urlApi}/${idAsignatura}`, httpOptions); // Asegúrate de usar tu URL correcta
+  }
+
   getAsignaturaListaSolicitudes(idAsignatura: number): Observable<Alumno[]> {
 
     const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado

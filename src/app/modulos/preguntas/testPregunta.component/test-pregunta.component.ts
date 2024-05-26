@@ -6,7 +6,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-test-pregunta',
-  templateUrl: './test-pregunta.component.html'
+  templateUrl: './test-pregunta.component.html',
+  styleUrls:['../styles.css']
 })
 export class TestPreguntaComponent implements OnInit {
   

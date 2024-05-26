@@ -10,7 +10,7 @@
         <option *ngFor="let lista of listas" [value]="lista">{{ lista }}</option>
       </select>
     </div>
-    <div class="col-md-6" *ngIf="listaSeleccionada === 'Retos inscritos'">
+    <div class="col-md-6" *ngIf="listaSeleccionada === 'Retos inscritos' || listaSeleccionada === 'Retos de alumnos' ">
       <select class="form-control" [(ngModel)]="estadoSeleccionado" (change)="onSelectChange()">
         <option *ngFor="let estado of estados " [value]="estado">{{ getEstadoReto(estado) }}</option>
       </select>
@@ -46,7 +46,7 @@
             <td>{{ reto.fechaFin  | date:'yyyy-MM-dd'}}</td>
             <td>{{ reto?.logro?.nombre }}</td>
             <td *ngIf="esProfesor()">
-              <button class="btn btn-outline-danger" (click)="borrarReto(reto.id); $event.stopPropagation()">Eliminar</button>
+              <button class="btn btn-outline-danger" (click)="borrarReto(reto); $event.stopPropagation()">Eliminar</button>
             </td>
             <td *ngIf="!esProfesor()">
               <button class="btn btn-primary" (click)="unirseReto(reto.id, reto.nombre); $event.stopPropagation()">Unirse Reto</button>
@@ -54,23 +54,21 @@
           </tr>
         </tbody>
       </table>
-      <app-lista-estados *ngIf="listaSeleccionada ==='Retos inscritos' && !esProfesor()"
+      <app-lista-estados *ngIf="listaSeleccionada ==='Retos inscritos'  && !esProfesor()"
       (recargarRetos)="recargarListaRetos()"
       [retosAsignados]="retosUsuario"
       [estadoSeleccionado]="estadoSeleccionado"
       ></app-lista-estados>
 
-      <app-lista-estados-profesor *ngIf="listaSeleccionada ==='Retos inscritos' && esProfesor()"
+      <app-lista-estados-profesor  *ngIf="listaSeleccionada === 'Retos de alumnos'"
       (recargarRetos)="recargarListaRetos()"
       [retosAsignados]="retosUsuarioFiltrados"
       [estadoSeleccionado]="estadoSeleccionado"
       
       ></app-lista-estados-profesor>
-      <div class="mt-3">
+      <div class="d-flex gap-2 mt-3">
         <button class="btn btn-secondary" [routerLink]="['/asignaturas', id]">Volver</button>
-      </div>
-      <div class="mt-3" *ngIf="esProfesor()">
-        <button class="btn btn-success" [routerLink]="['/asignaturas', id,'retos','añadir']">Añadir</button>
+        <button class="btn btn-success" *ngIf="esProfesor() && listaSeleccionada ==='Lista retos'" [routerLink]="['/asignaturas', id,'retos','añadir']">Añadir</button>
       </div>
     </div>
   </div>

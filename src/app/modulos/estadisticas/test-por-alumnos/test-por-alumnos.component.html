@@ -1,4 +1,4 @@
-
+<!-- 
 
 
 <div class="container mt-4">
@@ -15,4 +15,56 @@
       </ul>
     </div>
   </div>
-  
+   -->
+
+<div class="container mt-4">
+  <!-- Título principal -->
+  <div class="row">
+    <div class="col-12">
+      <h1 class="text-center mb-4">Notas de los test por alumnos</h1>
+    </div>
+    <div class="col-12 text-center mb-4">
+      <button class="btn  d-flex align-items-center justify-content-center" (click)="openInfoDialog()"
+        style="cursor: pointer;">
+        <img src="assets/images/info-5.png" alt="Información" style="width: 30px; height: 30px; margin-right: 8px;">
+        <span>Mostrar Información</span>
+      </button>
+    </div>
+  </div>
+
+  <div @fadeInStagger *ngFor="let estadisticaTest of testPorAlumnos" class="mb-4">
+
+    <div class="card border-primary">
+      <!-- Nombre del Alumno -->
+      <div class="card-header bg-info text-white" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);">
+
+        <h3 class="test-title mb-0">{{ estadisticaTest.alumno.usuario.nombre }}</h3>
+      </div>
+      <div class="card-body">
+
+        <!-- Encabezados de las columnas -->
+        <div class="row mb-3">
+          <div class="col-6">
+            <strong class="column-header">Nombre del Test</strong>
+          </div>
+          <div class="col-6 text-right">
+            <strong class="column-header">Notas</strong>
+          </div>
+        </div>
+
+        <ul class="list-group">
+          <li *ngFor="let estadistica of estadisticaTest.estadisticas"
+            class="list-group-item d-flex justify-content-between align-items-center">
+            <!-- Nombre del Test -->
+            <span class="test-title">{{ estadistica.test.nombre }}</span>
+            <div class="text-right">
+              <!-- Puntuaciones del Alumno -->
+              <span *ngFor="let puntuacion of estadistica.puntuacion" class="badge bg-primary rounded-pill ml-1">{{
+                puntuacion }}</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

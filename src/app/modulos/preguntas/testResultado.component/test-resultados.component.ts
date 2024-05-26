@@ -1,6 +1,8 @@
 import { ActivatedRoute } from '@angular/router';
 import { TestService } from './../test.service';
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { CrearReporteComponent } from '../crear-reporte/crear-reporte.component';
 
 
 @Component({
@@ -15,7 +17,9 @@ export class TestResultadosComponent implements OnInit {
 
   resultados: any;  // Declaras la propiedad 'resultados' aquí
 
-  constructor(private testService: TestService, private route:ActivatedRoute) {}
+  constructor(private testService: TestService, private route:ActivatedRoute,
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
 
@@ -34,6 +38,23 @@ export class TestResultadosComponent implements OnInit {
         console.error('Ha ocurrido un error al obtener los resultados: ', error);
       }
     );
+  }
+
+
+
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(CrearReporteComponent,{
+      data: {
+        message: 'Esta aplicación te permite gestionar tus tareas de manera eficiente. Puedes agregar, editar y eliminar tareas, así como asignarles prioridades y fechas límite.'
+      },
+      width: '70%',
+      height:'70%'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('El diálogo se cerró');
+    });
   }
   
 

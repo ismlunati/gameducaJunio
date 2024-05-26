@@ -41,19 +41,20 @@ export class AnadirArtefactosComponent implements OnInit {
 
 
   ngOnInit(): void {
-    //this.route.snapshot.parent?.paramMap.get('id')
     
 
+    
+    const isAlumno= !this.esProfesor();
+
     this.artefactoForm = this.fb.group({
-      nombre: new UntypedFormControl('', Validators.required),
-      descripcion: new UntypedFormControl('', Validators.required),
-      costePuntos: new UntypedFormControl('', Validators.required),
-      repetible: new UntypedFormControl(false),
-      temporal:[false],
+      nombre: new UntypedFormControl({ value: '', disabled: isAlumno }, Validators.required),
+      descripcion: new UntypedFormControl({ value: '', disabled: isAlumno }, Validators.required),
+      costePuntos: new UntypedFormControl({ value: '', disabled: isAlumno }, Validators.required),
+      repetible: new UntypedFormControl({ value: false, disabled: isAlumno }),
+      temporal:({ value: false, disabled: isAlumno }),
       fechaInicio: new UntypedFormControl({ value: '', disabled: true }),
       fechaFin: new UntypedFormControl({ value: '', disabled: true })
     });
-
 
 
       this.idAsignatura = +this.route.snapshot.parent?.paramMap.get('id')!;
@@ -110,8 +111,10 @@ export class AnadirArtefactosComponent implements OnInit {
 
 
 
-  }
 
+
+
+  }
 
 
 
@@ -139,7 +142,7 @@ export class AnadirArtefactosComponent implements OnInit {
 
 
   actualizarArtefacto(): void {
-console.log("actualizando");
+  console.log("actualizando");
     Object.assign(this.artefacto, this.artefactoForm.value);
 
     console.log(this.artefacto);

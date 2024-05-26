@@ -177,3 +177,148 @@
   border-radius: 0.25rem;
   margin-top: 10px;
 }
+
+
+
+
+/* Estilos aclaracion columnas  */
+
+
+.container {
+  padding: 20px;
+  border-radius: 8px;
+}
+
+h3 {
+  font-size: 1.5rem;
+}
+
+ul.list-group {
+  margin-top: 10px;
+}
+
+ul.list-group li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+ul.list-group li div {
+  flex: 1;
+}
+
+ul.list-group li div.col-9 {
+  text-align: left;
+}
+
+ul.list-group li div.col-3 {
+  text-align: right;
+}
+
+
+
+
+
+.custom-badge {
+  background-color: #007bff;  /* Color de fondo */
+  color: #ffffff;  /* Color del texto */
+  font-size: 1.2em;  /* Tamaño del texto */
+  padding: 10px;  /* Espaciado interno */
+  border-radius: 12px;  /* Bordes redondeados */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);  /* Sombra */
+  min-width: 40px;  /* Ancho mínimo */
+  text-align: center;  /* Centrar el texto */
+}
+
+
+
+
+
+
+
+
+
+
+/*test por test */
+
+/* styles.css o el archivo CSS específico del componente */
+
+/* styles.css o el archivo CSS específico del componente */
+
+/* Estilo para el título principal */
+/* styles.css o el archivo CSS específico del componente */
+
+/* Estilo para el título principal */
+h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #343a40;
+  margin-bottom: 1.5rem;
+}
+
+/* Estilo para el título del test */
+.test-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+/* Estilo para los encabezados de las columnas */
+.column-header {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+/* Estilo para la tarjeta */
+.card {
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo para el encabezado de la tarjeta */
+.card-header {
+  background-color: #17a2b8; /* Cambia a un tono más profesional */
+  color: white;
+  font-weight: 500;
+}
+
+/* Estilo para la lista de grupos */
+.list-group-item {
+  border: none; /* Quitar bordes */
+  padding: 1rem;
+  transition: background-color 0.3s;
+}
+
+/* Hover effect */
+.list-group-item:hover {
+  background-color: #f1f1f1;
+}
+
+/* Estilo para los nombres de los alumnos */
+.list-group-item h4 {
+  margin-bottom: 0.5rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+/* Estilo para las puntuaciones */
+.badge {
+  font-size: 1rem;
+  padding: 0.5rem;
+}
+
+/* Estilo para el contenedor del texto del alumno */
+.flex-grow-1 {
+  flex: 1;
+}
+
+/* Estilo para alinear el texto a la derecha */
+.text-right {
+  text-align: right;
+}
+
+/* Margen para los elementos con puntuaciones */
+.ml-1 {
+  margin-left: 0.5rem;
+}

@@ -38,7 +38,9 @@ export class ListadoRetosComponent implements OnInit {
     this.getRetosPorAsignatura();
     this.getRetosPorAlumnoAsignatura();
 
-
+    if(this.esProfesor()){
+      this.listas=['Lista retos', 'Retos de alumnos'];
+    }
 
 
   }
@@ -64,6 +66,7 @@ export class ListadoRetosComponent implements OnInit {
     this.asignaturaService.getRetosPorAsignatura(this.id).subscribe(retos => {
       this.retos = retos;
       this.retosFiltrados = retos;
+      console.log("retos por asignatura", retos);
 
     });
   }
@@ -122,14 +125,17 @@ export class ListadoRetosComponent implements OnInit {
 
 
 
-  borrarReto(idReto: number): void {
-    this.asignaturaService.borrarReto(idReto, this.id).subscribe(
+  borrarReto(reto: Reto): void {
+    this.asignaturaService.borrarReto(reto.id, this.id).subscribe(
       res => {
         console.log('Asignatura borrada exitosamente');
-        this.retos = this.retos.filter(reto => reto.id !== idReto);
+        this.getRetosPorAsignatura();
+        Swal.fire('Borrar', `Se ha borrado el reto ${reto.nombre} con exito`, 'success');
+
         // Actualiza tu vista o haz algo tras la eliminación de la asignatura
       },
       err => {
+        Swal.fire('Borrar', `Ha ocurrido un error borrando el reto ${reto.nombre}`, 'error');
         console.error('Error borrando la asignatura', err);
       }
     );

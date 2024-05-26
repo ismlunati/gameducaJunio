@@ -3,6 +3,7 @@ import { Asignatura } from '../../model/asignatura';
 import { AsignaturaService } from '../../asignatura.service';
 import { Router } from '@angular/router';
 import { NavService } from 'src/app/modulos/web-main/nav.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-listado',
@@ -14,22 +15,40 @@ export class ListadoComponent implements OnInit {
 
   @Input() alumno!: boolean;
 
-  constructor(private asignaturaService: AsignaturaService, private router:Router, private navService:NavService) { }
+  constructor(private asignaturaService: AsignaturaService, private router: Router, private navService: NavService) { }
 
   ngOnInit(): void {
     this.navService.setSubject('');
     this.asignaturaService.getAsignaturas().subscribe(asignaturas => {
       this.asignaturas = asignaturas;
-      console.log("procedo a imprimir las asignaturas",this.asignaturas);
+      console.log("procedo a imprimir las asignaturas", this.asignaturas);
       //console.log("Estoy imprimiendo el valor de alumno", this.alumno);
     });
   }
 
 
   navegar(asignatura: Asignatura) {
-    
-    this.router.navigate(['/asignaturas', asignatura.id]);
-    this.navService.setSubject(asignatura.nombre);
+
+    if (this.alumno) {
+      console.log("alumno")
+      this.asignaturaService.getAsignatura(asignatura.id).subscribe(res => {
+        console.log("res")
+        if (res.id) {
+          this.router.navigate(['/asignaturas', asignatura.id]);
+          this.navService.setSubject(asignatura.nombre);
+        }else{
+          Swal.fire('Acceso', `No se ha podido acceder a la asignatura ${asignatura.nombre} `, 'error');
+
+        }
+
+      })
+    }
+    else {
+      console.log("profesor")
+      this.router.navigate(['/asignaturas', asignatura.id]);
+      this.navService.setSubject(asignatura.nombre);
+
+    }
   }
 
   borrarAsignatura(idAsignatura: number): void {

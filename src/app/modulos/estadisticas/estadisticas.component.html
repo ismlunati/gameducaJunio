@@ -1,13 +1,21 @@
 
 <div class="container mt-5">
     <div class="text-center mb-4">
-        <button class="btn btn-lg btn-primary mx-2" (click)="mostrarBotones('primero')" @slideFromLeft>Estadisticas por
+        <button class="btn btn-lg btn-primary mx-2"
+        [ngClass]="{'btn-primary': grupoBotones === 'primero', 'btn-secondary': grupoBotones !== 'primero'}"
+        (click)="mostrarBotones('primero')" @slideFromLeft>Estadisticas por
             preguntas</button>
-        <button class="btn btn-lg btn-secondary mx-2" (click)="mostrarBotones('segundo')" @slideFromLeft>Estadisticas
+        <button class="btn btn-lg btn-secondary mx-2"
+        [ngClass]="{'btn-primary': grupoBotones === 'segundo', 'btn-secondary': grupoBotones !== 'segundo'}"
+         (click)="mostrarBotones('segundo')" @slideFromLeft>Estadisticas
             por test</button>
-        <button class="btn btn-lg btn-secondary mx-2" (click)="mostrarBotones('tercero')"
+        <button class="btn btn-lg btn-secondary mx-2" 
+        [ngClass]="{'btn-primary': grupoBotones === 'tercero', 'btn-secondary': grupoBotones !== 'tercero'}"
+        (click)="mostrarBotones('tercero')"
             @slideFromRight>Reportes</button>
-        <button class="btn btn-lg btn-secondary mx-2" (click)="mostrarBotones('cuarto')"
+        <button class="btn btn-lg btn-secondary mx-2" 
+        [ngClass]="{'btn-primary': grupoBotones === 'cuarto', 'btn-secondary': grupoBotones !== 'cuarto'}"
+        (click)="mostrarBotones('cuarto')"
             @slideFromRight>Tier List</button>
     </div>
 

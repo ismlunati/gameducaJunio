@@ -39,13 +39,8 @@
                 <option *ngFor="let artefacto of artefactosAsignatura" [value]="artefacto.id">{{ artefacto.nombre }}</option>
               </select>
             </div>
-            <div class="mb-3">
-              <label for="imagen" class="form-label">Imagen</label>
-              <input type="file" id="imagen" (change)="onFileSelected($event)" />
-              <div *ngIf="base64Image">
-                <img [src]="base64Image" alt="Imagen del Logro" style="max-width: 100%; height: auto;" />
-              </div>
-            </div>
+
+            <input type="file" (change)="onFileSelected($event)" />
 
 
           </div>

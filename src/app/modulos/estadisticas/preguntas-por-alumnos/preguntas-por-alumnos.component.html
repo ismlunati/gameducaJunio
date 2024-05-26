@@ -1,15 +1,43 @@
-
+<!-- app.component.html -->
 
 
 <div class="container mt-4">
-    <div @fadeInStagger *ngFor="let pregunta of preguntasAlumnos" class="mb-4">
-      <h3 class="mb-3 text-primary">{{ pregunta.alumno.usuario.nombre }}</h3>
-      <ul class="list-group">
-        <li *ngFor="let estadistica of pregunta.estadisticas" class="list-group-item d-flex justify-content-between align-items-center">
-          {{ estadistica.tema.nombre }}
-          <span class="badge bg-primary rounded-pill">{{ estadistica.numeroDePreguntas }}</span>
-        </li>
-      </ul>
+
+  <div class="row">
+    <div class="col-12">
+      <h1 class="text-center mb-4">Notas de los alumnos por test</h1>
+    </div>
+    <div class="col-12 text-center mb-4">
+      <button class="btn  d-flex align-items-center justify-content-center" (click)="openInfoDialog()" style="cursor: pointer;">
+        <img src="assets/images/info-5.png" alt="Información" style="width: 30px; height: 30px; margin-right: 8px;">
+        <span>Mostrar Información</span>
+      </button>
     </div>
   </div>
   
+  <div @fadeInStagger *ngFor="let pregunta of preguntasAlumnos" class="mb-4">
+    <h3 class="mb-3 text-primary">{{ pregunta.alumno.usuario.nombre }}</h3>
+
+    <div class="d-flex justify-content-between align-items-center">
+      <div class="col-9">
+        <strong class="column-header">Temas</strong>
+      </div>
+      <div class="col-3 text-end">
+        <strong class="column-header">Total Preguntas</strong>
+      </div>
+    </div>
+
+
+    <ul class="list-group">
+      <li *ngFor="let estadistica of pregunta.estadisticas"
+        class="list-group-item d-flex justify-content-between align-items-center">
+        <div class="col-9">
+          {{ estadistica.tema.nombre }}
+        </div>
+        <div class="col-3 text-end">
+          <span class="badge custom-badge rounded-pill">{{ estadistica.numeroDePreguntas }}</span>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

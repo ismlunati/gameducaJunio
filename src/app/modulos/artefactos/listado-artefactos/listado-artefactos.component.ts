@@ -1,6 +1,8 @@
+import { filter } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 import { DatePipe } from '@angular/common';
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { AsignaturaService } from 'src/app/modulos/asignatura/asignatura.service';
 import { Artefacto } from 'src/app/modulos/artefactos/model/Artefacto';
 import { EstadoCompra } from 'src/app/modulos/artefactos/model/EstadoCompra';
@@ -28,6 +30,7 @@ export class ListadoArtefactosComponent implements OnInit {
   listas: string[] = ['Tienda', 'Mis artefactos'];  // Opciones para el select
   listaSeleccionada: string = 'Tienda';
 
+  navigationSubscription!: Subscription;
 
   public estados = Object.keys(EstadoCompra);
 
@@ -50,6 +53,20 @@ export class ListadoArtefactosComponent implements OnInit {
       this.listas = ['Tienda', 'Peticiones de uso'];
     }
 
+
+    this.navigationSubscription = this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd && this.router.url.includes('/listado'))
+    ).subscribe(() => {
+      this.getListaArtefactos();
+      this.getListaArtefactosAlumnos();
+    });
+
+  }
+
+  ngOnDestroy(): void {
+    if (this.navigationSubscription) {
+      this.navigationSubscription.unsubscribe();
+    }
   }
 
 
@@ -129,6 +146,8 @@ export class ListadoArtefactosComponent implements OnInit {
         this.getListaArtefactosAlumnos();
       },
       err => {
+        Swal.fire('Borrado', `Ha ocurrido un error borrando el artefacto ${this.artefactos.filter(x => x.id === idArtefacto)[0].nombre} `, 'error');
+
         console.error('Error borrando la asignatura', err);
       }
     );

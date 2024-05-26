@@ -1,26 +1,42 @@
-
-<div *ngIf="resultados">
-  <h2>Resultados del Test</h2>
-    <p><strong>Número de Preguntas Totales:</strong> {{resultados.numeroPreguntasTotales}}</p>
-    <p><strong>Número de Preguntas Acertadas:</strong> {{resultados.numeroPreguntasAcertadas}}</p>
-    <p><strong>Puntuación:</strong> {{resultados.puntuacion}}</p>
-
-    <h3>Preguntas y Respuestas</h3>
-    <div *ngFor="let item of resultados.preguntasRespuestas">
-      <h4>Pregunta: {{item.pregunta.enunciado}}</h4> 
-      <ul>
-        <li *ngFor="let respuesta of item.pregunta.respuestas">
-          {{respuesta.texto}}
-        </li>
-      </ul>
-      <p><strong>Respuesta Seleccionada:</strong> {{item.respuestas[0].texto}}</p> 
-      <p><strong>Respuesta Correcta:</strong> {{item.respuestas[1].texto}}</p> 
-
-      <button 
-              class="btn btn-primary" 
-              [routerLink]="['/asignaturas',idAsignatura , 'test',   idTest,'reportarPregunta', item.pregunta.id]"
-              >
-              Crear Reporte
-            </button>
+<div *ngIf="resultados" class="container my-5">
+  <div class="card shadow-lg">
+    <div class="card-header bg-primary text-white text-center">
+      <h2>Resultados del Test</h2>
     </div>
+    <div class="card-body">
+      <div class="mb-4">
+        <p><strong>Número de Preguntas Totales:</strong> {{resultados.numeroPreguntasTotales}}</p>
+        <p><strong>Número de Preguntas Acertadas:</strong> {{resultados.numeroPreguntasAcertadas}}</p>
+        <p><strong>Puntuación:</strong> {{resultados.puntuacion}}</p>
+      </div>
+
+      <h3 class="mb-4">Preguntas y Respuestas</h3>
+      <div *ngFor="let item of resultados.preguntasRespuestas" class="mb-4">
+        <div class="card mb-3">
+          <div class="card-body">
+            <h4 class="card-title">Pregunta: {{item.pregunta.enunciado}}</h4>
+            <ul class="list-group list-group-flush mb-3">
+              <li class="list-group-item" *ngFor="let respuesta of item.pregunta.respuestas">
+                {{respuesta.texto}}
+              </li>
+            </ul>
+            <p><strong>Respuesta Seleccionada:</strong> {{item.respuestas[0].texto}}</p>
+            <p><strong>Respuesta Correcta:</strong> {{item.respuestas[1].texto}}</p>
+            <div class="text-right">
+              <button 
+                class="btn btn-primary" 
+                [routerLink]="['/asignaturas', idAsignatura, 'test', idTest, 'reportarPregunta', item.pregunta.id]">
+                Crear Reporte
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex gap-2 mt-3">
+    <button class="btn btn-secondary" [routerLink]="['/asignaturas', idAsignatura,'test','listado']">Volver</button>
+
+  </div>
 </div>

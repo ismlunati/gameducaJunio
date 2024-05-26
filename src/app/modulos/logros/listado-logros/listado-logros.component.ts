@@ -6,6 +6,8 @@ import { Artefacto } from 'src/app/modulos/artefactos/model/Artefacto';
 import { Logro } from 'src/app/modulos/logros/model/Logro';
 import { AuthService } from 'src/app/modulos//usuario/auth.service';
 import { Subscription } from 'rxjs';
+import { ArtefactoLogro } from '../../artefactos/model/ArtefactoLogro';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-listado-logros',
@@ -61,17 +63,29 @@ export class ListadoLogrosComponent implements OnInit {
   }
 
 
-  borrarLogro(idLogro: number): void {
-    this.asignaturaService.borrarLogro(idLogro, this.id).subscribe(
+  borrarLogro(logro: Logro): void {
+    this.asignaturaService.borrarLogro(logro.id, this.id).subscribe(
       res => {
+        Swal.fire('Borrado', `Se ha borrado el logro ${logro.nombre} con exito`, 'success');
+
         console.log('Logro borrada exitosamente');
-        this.logros = this.logros.filter(logro => logro.id !== idLogro);
         // Actualiza tu vista o haz algo tras la eliminación de la asignatura
       },
       err => {
-        console.error('Error borrando la Logro', err);
+        Swal.fire('Borrado', `Ha ocurrido un error borrando el logro ${logro.nombre} `, 'error');
+
       }
     );
+  }
+
+  getDesbloquearObtener(artefactoLogros: ArtefactoLogro): string {
+    if (artefactoLogros?.desbloquear) {
+      return 'Desbloquear';
+    } else if (artefactoLogros?.obtener) {
+      return 'Obtener';
+    } else {
+      return 'No procede';
+    }
   }
 
   esProfesor():boolean{

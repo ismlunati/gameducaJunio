@@ -1,11 +1,13 @@
+import { filter } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormArray, UntypedFormGroup, UntypedFormControl, AbstractControl, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Pregunta } from 'src/app/modulos/preguntas/model/Pregunta';
 import { TestService } from 'src/app/modulos/preguntas/test.service';
+import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app/modulos/-crear-pregunta',
+  selector: 'app-crear-pregunta',
   templateUrl: './crear-pregunta.component.html',
   styleUrls: ['../tema.component.css']
 
@@ -16,7 +18,9 @@ export class CrearPreguntaComponent implements OnInit {
   idAsignatura!: number;
   idTema!: number;
 
-  constructor(private route: ActivatedRoute, private fb: UntypedFormBuilder, private testService: TestService) { }
+  constructor(private route: ActivatedRoute, private fb: UntypedFormBuilder, private testService: TestService,
+    private router:Router
+  ) { }
 
   ngOnInit(): void {
     this.idAsignatura = +this.route.snapshot.parent?.paramMap.get('id')!;
@@ -55,14 +59,21 @@ export class CrearPreguntaComponent implements OnInit {
 
     if (this.preguntaForm.valid) {
       this.testService.crearPregunta(this.idAsignatura, this.idTema, this.preguntaForm.value).subscribe({
-        next:(respuesta) => 
-          console.log('Pregunta creado exitosamente', respuesta)
+        next:(respuesta) => {
+          console.log('Pregunta creado exitosamente', respuesta);
           // Puedes añadir más lógica aquí, como redirigir a otra página o mostrar un mensaje de éxito
-        ,
-        error:(e)=> 
+          Swal.fire('Crear', `Se ha creado la pregunta:  ${respuesta.enunciado} con exito`, 'success');
+
+          this.router.navigate(['/asignaturas'])
+
+       } ,
+        error:(e)=> {
           console.error('Hubo un error al crear la Pregunta', e)
           // Puedes manejar los errores aquí, como mostrar un mensaje de error al usuario
-        
+          Swal.fire('Borrar', `No se ha podido crear la pregunta `, 'error');
+
+         
+        }
     });
 
 

@@ -4,16 +4,28 @@
     <h1 class="display-4 text-primary title-styled">Lista de Artefactos</h1>
   </div>
 
-  <select [(ngModel)]="estadoSeleccionado" *ngIf="listaSeleccionada !=='Tienda'" (change)="filtrarPorEstado()">
-    <option *ngFor="let estado of estados" [value]="estado">{{getEstadoValor(estado)}}</option>
-  </select>
+
   
 
 
-  <select [(ngModel)]="listaSeleccionada" (change)="filtrarPorEstado()">
-    <option *ngFor="let lista of listas" [value]="lista">{{lista}}</option>
-  </select>
 
+
+
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <select class="form-control" [(ngModel)]="listaSeleccionada" (change)="filtrarPorEstado()">
+        <option *ngFor="let lista of listas" [value]="lista">{{lista}}</option>
+      </select>
+    </div>
+    <div class="col-md-6" *ngIf="listaSeleccionada !=='Tienda'">
+      <select class="form-control" [(ngModel)]="estadoSeleccionado"  (change)="filtrarPorEstado()">
+        <option *ngFor="let estado of estados" [value]="estado">{{getEstadoValor(estado)}}</option>
+      </select>
+    </div>
+  </div>
+
+
+  
 
     <div class="row">
       <div class="col">
@@ -25,6 +37,7 @@
               <th>Descripcion</th>
               <th>Coste</th>
               <th>Estado</th>
+              <th>Repetible</th>
               <th>Temporal</th>
               <th>Fecha Inicio</th>
               <th>Fecha Fin</th>
@@ -40,6 +53,7 @@
               <td>{{artefacto.descripcion}}</td>
               <td>{{artefacto.costePuntos}}</td>
               <td>{{artefacto.estado}}</td>
+              <td>{{artefacto.repetible ? 'Sí' : 'No'}}</td>
               <td>{{artefacto.temporal}}</td>
               <td>{{artefacto.fechaInicio| date: 'dd/MM/yyyy' }}</td>
               <td>{{artefacto.fechaFin| date: 'dd/MM/yyyy' }}</td>
@@ -70,11 +84,11 @@
         (recargarDatosLista)="recargarListaArtefactosAlumnos($event)"
         *ngIf="listaSeleccionada !=='Tienda'"
         ></app-listado-artefactos-alumnos>
-        <div class="mt-3">
+
+
+          <div class="d-flex gap-2 mt-3">
             <button class="btn btn-secondary" [routerLink]="['/asignaturas', id]">Volver</button>
-          </div>
-          <div class="mt-3">
-            <button class="btn btn-success" [routerLink]="['/asignaturas', id,'artefactos','añadir']">Añadir</button>
+            <button class="btn btn-success" *ngIf="esProfesor()" [routerLink]="['/asignaturas', id, 'artefactos', 'añadir']">Añadir</button>
           </div>
       </div>
     </div>

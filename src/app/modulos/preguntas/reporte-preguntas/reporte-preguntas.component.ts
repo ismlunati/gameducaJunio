@@ -2,6 +2,7 @@ import { ReportePregunta } from '../model/ReportePregunta';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute,  Router } from '@angular/router';
 import { TestService } from '../test.service';
+import { Respuesta } from '../model/Respuesta';
 
 @Component({
   selector: 'app-reporte-preguntas',
@@ -33,7 +34,10 @@ export class ReportePreguntasComponent implements OnInit {
 
   }
 
-
+  getRespuestaCorrecta(respuestas: Respuesta[] | undefined): string {
+    const respuestaCorrecta = respuestas?.find(respuesta => respuesta?.esCorrecta);
+    return respuestaCorrecta ? respuestaCorrecta.texto : 'No disponible';
+  }
   
 
 }

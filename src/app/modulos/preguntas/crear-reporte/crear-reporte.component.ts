@@ -5,6 +5,7 @@ import { EstadoReportePregunta } from '../model/EstadoReportePregunta';
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { ReportePregunta } from '../model/ReportePregunta';
 import { TestService } from '../test.service';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-crear-reporte',
@@ -20,7 +21,7 @@ export class CrearReporteComponent implements OnInit {
   motivoOptions = Object.keys(MotivoReportePregunta);
   estadoOptions = Object.keys(EstadoReportePregunta);
 
-  constructor(private route: ActivatedRoute, private fb: UntypedFormBuilder, private testService:TestService) { 
+  constructor(public dialogRef: MatDialogRef<CrearReporteComponent>, private route: ActivatedRoute, private fb: UntypedFormBuilder, private testService:TestService) { 
 
     this.reporteForm = this.fb.group({
       texto: [''],
@@ -81,6 +82,11 @@ export class CrearReporteComponent implements OnInit {
 
   getEstadoValue(key: string): string {
     return EstadoReportePregunta[key as keyof typeof EstadoReportePregunta];
+  }
+
+
+  closeDialog(): void {
+    this.dialogRef.close();
   }
 
 }

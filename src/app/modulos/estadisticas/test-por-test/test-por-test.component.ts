@@ -3,6 +3,8 @@ import { EstadisticasService } from '../estadisticas.service';
 import { ActivatedRoute } from '@angular/router';
 import { trigger, state, style, transition, animate, query, stagger } from '@angular/animations';
 import { EstadisticasTestPorTestDTO } from '../model/EstadisticasTestPorTestDTO';
+import { MatDialog } from '@angular/material/dialog';
+import { InfoDialogComponent } from '../info-dialog/info-dialog.component';
 
 
 @Component({
@@ -31,7 +33,9 @@ export class TestPorTestComponent implements OnInit {
   testPorTest!:EstadisticasTestPorTestDTO[];
 
 
-  constructor(private estadisticaService: EstadisticasService, private route: ActivatedRoute) { 
+  constructor(private estadisticaService: EstadisticasService, private route: ActivatedRoute,
+    private dialog: MatDialog
+  ) { 
     
   }
 
@@ -49,4 +53,13 @@ export class TestPorTestComponent implements OnInit {
      });
   }
 
+
+
+  openInfoDialog() {
+    this.dialog.open(InfoDialogComponent, {
+      data: {
+        message: 'Esta aplicación te permite gestionar tus tareas de manera eficiente. Puedes agregar, editar y eliminar tareas, así como asignarles prioridades y fechas límite.'
+      }
+    });
+  }
 }

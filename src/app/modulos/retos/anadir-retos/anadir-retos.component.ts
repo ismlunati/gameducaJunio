@@ -43,14 +43,16 @@ export class AnadirRetosComponent implements OnInit {
   ngOnInit(): void {
     //this.route.snapshot.parent?.paramMap.get('id')
 
+    const esAlumno=!this.esProfesor();
+
     this.retoForm = this.fb.group({
-      nombre: new UntypedFormControl(''),
-      descripcion: new UntypedFormControl(''),
-      puntosOtorgados: new UntypedFormControl(''),
-      temporal: new UntypedFormControl(false),
+      nombre: new UntypedFormControl({ value: '', disabled: esAlumno }),
+      descripcion: new UntypedFormControl({ value: '', disabled: esAlumno }),
+      puntosOtorgados: new UntypedFormControl({ value: '', disabled: esAlumno }),
+      temporal: new UntypedFormControl({ value: false, disabled: esAlumno }),
       fechaInicio: new UntypedFormControl({ value: '', disabled: true }),
       fechaFin: new UntypedFormControl({ value: '', disabled: true }),
-      logro: new UntypedFormControl('')
+      logro: new UntypedFormControl({ value: '', disabled: esAlumno })
     });
 
     this.idAsignatura = +this.route.snapshot.parent?.paramMap.get('id')!;

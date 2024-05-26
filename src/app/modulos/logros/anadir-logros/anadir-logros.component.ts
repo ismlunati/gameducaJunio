@@ -32,13 +32,15 @@ export class AnadirLogrosComponent implements OnInit {
   constructor(private fb: UntypedFormBuilder, private asignaturaService: AsignaturaService,
     private route: ActivatedRoute, private authService: AuthService, private router: Router) {
 
+    const isAlumno= !this.esProfesor();
+
     this.logroForm = this.fb.group({
-      nombre: ['', Validators.required],
-      descripcion: ['', Validators.required],
+      nombre: [{ value: '', disabled: isAlumno}, Validators.required],
+      descripcion: [{ value: '', disabled: isAlumno}, Validators.required],
       artefactoLogros: this.fb.group({
         desbloquear: [{ value: false, disabled: true }],
         obtener: [{ value: false, disabled: true }],
-        artefacto: new UntypedFormControl('')
+        artefacto: new UntypedFormControl({ value: '', disabled: isAlumno})
       }),
     });
 
@@ -48,7 +50,7 @@ export class AnadirLogrosComponent implements OnInit {
       // También asegurando que los controles no son null.
       const desbloquearControl = this.logroForm.get('artefactoLogros.desbloquear') as UntypedFormControl;
       const obtenerControl = this.logroForm.get('artefactoLogros.obtener') as UntypedFormControl;
-      if (artefacto) {
+      if (artefacto && !isAlumno) {
         desbloquearControl.enable();
         obtenerControl.enable();
       } else {
@@ -63,26 +65,17 @@ export class AnadirLogrosComponent implements OnInit {
     //this.route.snapshot.parent?.paramMap.get('id')
 
     this.idAsignatura = +this.route.snapshot.parent?.paramMap.get('id')!;
-
     this.idLogro = +this.route.snapshot?.paramMap.get('id')!;
-    console.log("Este es el id", this.idAsignatura);
-
-    console.log("Este es el id del logro", this.idLogro);
 
 
     this.asignaturaService.getArtefactosPorAsignatura(this.idAsignatura).subscribe(artefactos => {
       this.artefactosAsignatura = artefactos;
-
-      console.log("Procedo a imprimir los artefactos disponibles", artefactos);
-
-
-
     });
+    
     // console.log("artefactos", this.artefactosAsignatura);
 
     if (this.idLogro !== 0) {
       // Aquí va la lógica si existe id
-      console.log(`El id es ${this.idAsignatura}`);
 
       this.crearEditar="Editar"
       
@@ -94,9 +87,7 @@ export class AnadirLogrosComponent implements OnInit {
 
         this.artefactosAsignatura = artefactos;
         this.logro = logro;
-        console.log("Estos son los artefactos", artefactos);
-        console.log("Estos es logro", logro);
-        console.log("valor del find", this.artefactosAsignatura.find(a=> a.id==this.logro.artefactoLogros.artefacto.id));
+
         this.base64Image=logro?.imagen;
 
         this.logroForm.patchValue({
@@ -112,7 +103,6 @@ export class AnadirLogrosComponent implements OnInit {
         });
 
 
-        console.log("logro patched", this.logroForm.value)
 
       })
 
@@ -130,11 +120,9 @@ export class AnadirLogrosComponent implements OnInit {
 
   metodoActualizarCrear(): void {
     if (this.idLogro !== 0) {
-      console.log("actualizar")
       this.actualizarLogro();
 
     } else {
-      console.log("crearLogro", this.logroForm.value)
       this.crearLogro()
 
     }
@@ -146,48 +134,28 @@ export class AnadirLogrosComponent implements OnInit {
   crearLogro(): void {
 
     const formValues = this.logroForm.value;
-    //console.log("artefactoDI", formValues.artefactoLogro.artefacto);
-    console.log("artefactoIDBD", this.artefactosAsignatura[0].id);
+
+    console.log('formValues',formValues)
     const selectedArtefacto = this.artefactosAsignatura.find(artefacto => artefacto.id === +formValues.artefactoLogros.artefacto);
 
-    console.log("selected artefacto", selectedArtefacto);
-    console.log("this.artefactosAsignatura", this.artefactosAsignatura);
-    console.log("formValues", this.logroForm.value);
-    console.log("formValues", formValues);
-    console.log("formValues ID", formValues.artefactoLogros.artefacto);
 
     let artefactoLogros: ArtefactoLogro | null = null; // asigna null como valor por defecto
 
-
     if (selectedArtefacto !== undefined) {
       artefactoLogros = {
-        ...formValues.artefactoLogro // Esto copia los valores de desbloquear y obtener del formulario
+        ...formValues.artefactoLogros // Esto copia los valores de desbloquear y obtener del formulario
       }
+      console.log("artefactoLogro Form", artefactoLogros)
+
       artefactoLogros!.artefacto = selectedArtefacto;
-
-
-      console.log("artefacto logros", artefactoLogros);
     }
 
-
-
-    console.log("Este es el artefacto que se postea", selectedArtefacto);
-    console.log("artefactoLogros que se postea", artefactoLogros);
     const logroPost: Logro = {
       ...formValues,  // Esto copia los valores de nombre, descripcion, etc. del formulario
       artefactoLogros: artefactoLogros,
       imagen: this.base64Image
     };
 
-
-
-
-
-
-
-
-
-    console.log("fomData", logroPost);
 
     //en vez de mandar this.logroForm.value voy a mandar logro
     this.asignaturaService.crearLogro(logroPost, this.idAsignatura!)
@@ -201,7 +169,6 @@ export class AnadirLogrosComponent implements OnInit {
 
 
   actualizarLogro(): void {
-    console.log("actualizando", this.logroForm.value);
     //Object.assign(this.logro, this.logroForm.value);
 
     const formValues = this.logroForm.value;
@@ -217,7 +184,6 @@ export class AnadirLogrosComponent implements OnInit {
       artefactoLogros!.artefacto = selectedArtefacto;
 
 
-      console.log("artefacto logros", artefactoLogros);
     }
 
     const logroPost: Logro = {
@@ -227,7 +193,6 @@ export class AnadirLogrosComponent implements OnInit {
       imagen: this.base64Image
     };
 
-    console.log("idasignatura", this.idAsignatura);
 
 
     this.asignaturaService.actualizarLogro(logroPost, this.idAsignatura!)
