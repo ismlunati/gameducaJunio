@@ -62,7 +62,7 @@ export class CrearPreguntaComponent implements OnInit {
         next:(respuesta) => {
           console.log('Pregunta creado exitosamente', respuesta);
           // Puedes añadir más lógica aquí, como redirigir a otra página o mostrar un mensaje de éxito
-          Swal.fire('Crear', `Se ha creado la pregunta:  ${respuesta.enunciado} con exito`, 'success');
+          Swal.fire('Crear pregunta', `Se ha creado la pregunta:"  ${respuesta.enunciado} "con exito`, 'success');
 
           this.router.navigate(['/asignaturas'])
 
@@ -70,7 +70,7 @@ export class CrearPreguntaComponent implements OnInit {
         error:(e)=> {
           console.error('Hubo un error al crear la Pregunta', e)
           // Puedes manejar los errores aquí, como mostrar un mensaje de error al usuario
-          Swal.fire('Borrar', `No se ha podido crear la pregunta `, 'error');
+          Swal.fire('Crear pregunta', `No se ha podido crear la pregunta `, 'error');
 
          
         }

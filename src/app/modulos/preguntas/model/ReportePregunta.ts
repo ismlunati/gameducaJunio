@@ -4,12 +4,12 @@ import { MotivoReportePregunta } from "./MotivoReportePregunta";
 import { Pregunta } from "./Pregunta";
 
 export interface ReportePregunta {
-    id: number;
+    id: number |undefined;
     texto: string;
     motivo: MotivoReportePregunta;
-    estado: EstadoReportePregunta;
-    pregunta: Pregunta|null;
-    alumno: Alumno|null;
+    estado: EstadoReportePregunta |undefined;
+    pregunta: Pregunta|undefined;
+    alumno: Alumno|undefined ;
 
 
   }

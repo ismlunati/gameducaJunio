@@ -61,6 +61,8 @@ export class ListadoTemasComponent implements OnInit {
       res => {
         console.log('Asignatura borrada exitosamente');
         this.recargarTemas();
+        Swal.fire('Borrar', `Se ha borrado el tema ${tema.nombre} con éxito`, 'success');
+
         // Actualiza tu vista o haz algo tras la eliminación de la asignatura
       },
       err => 

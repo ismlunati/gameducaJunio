@@ -1,15 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MotivoReportePregunta } from '../model/MotivoReportePregunta';
 import { EstadoReportePregunta } from '../model/EstadoReportePregunta';
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { ReportePregunta } from '../model/ReportePregunta';
 import { TestService } from '../test.service';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-crear-reporte',
-  templateUrl: './crear-reporte.component.html'
+  templateUrl: './crear-reporte.component.html',
+  styleUrls: ['../styles.css']
 })
 export class CrearReporteComponent implements OnInit {
 
@@ -19,18 +21,25 @@ export class CrearReporteComponent implements OnInit {
 
   reporteForm: UntypedFormGroup;
   motivoOptions = Object.keys(MotivoReportePregunta);
-  estadoOptions = Object.keys(EstadoReportePregunta);
+  motivo!:MotivoReportePregunta;
+  texto:string='';
 
-  constructor(public dialogRef: MatDialogRef<CrearReporteComponent>, private route: ActivatedRoute, private fb: UntypedFormBuilder, private testService:TestService) { 
+  constructor(public dialogRef: MatDialogRef<CrearReporteComponent>, 
+    private route: ActivatedRoute, 
+    private fb: UntypedFormBuilder, 
+    private testService:TestService,
+    @Inject(MAT_DIALOG_DATA) public data: any) { 
 
     this.reporteForm = this.fb.group({
       texto: [''],
-      motivo: [''],
-      estado: ['']
+      motivo: ['']
+
     });
   }
 
   ngOnInit(): void {
+
+    console.log("data", this.data)
 
     this.idAsignatura = +this.route.parent?.snapshot.paramMap.get('id')!;
     this.idTest = +this.route.snapshot.paramMap.get('idTest')!;
@@ -43,50 +52,42 @@ export class CrearReporteComponent implements OnInit {
   }
 
 
-  onSubmit(): void {
-    const formValues = this.reporteForm.value;
 
-    // crea un objeto ReportePregunta
-    const reportePregunta: ReportePregunta = {
-      id: 0,
-      texto: formValues.texto,
-      motivo: formValues.motivo,
-      estado: formValues.estado,
-      pregunta: null,
-      alumno: null
-    };
-    
-    console.log("reportarPregunta", reportePregunta);
-        // Ahora llama a tu servicio con este objeto
-        this.testService.crearReportarPregunta(reportePregunta, this.idAsignatura, this.idTest, this.idPregunta)
-        .subscribe(
-          response =>  {
-            // Maneja la respuesta exitosa aquí.
-            // 'response' es el valor que la API retorna.
-            console.log('Respuesta exitosa:', response);
-            alert('Reporte enviado exitosamente!');
-          },
-          error => {
-            // Maneja el error aquí.
-            // 'error' es el error que la API retorna.
-            console.error('Ocurrió un error:', error);
-            alert('Ocurrió un error al enviar el reporte.');
-          }
-        );
-  }
 
 
   getMotivoValue(key: string): string {
     return MotivoReportePregunta[key as keyof typeof MotivoReportePregunta];
   }
 
-  getEstadoValue(key: string): string {
-    return EstadoReportePregunta[key as keyof typeof EstadoReportePregunta];
+  submitReport(): void {
+    const reporte: ReportePregunta = {
+      id: undefined, // Será definido por el backend
+      texto: this.texto,
+      motivo: this.motivo,
+      estado: undefined, // Será definido por el backend o inicializado según tus necesidades
+      pregunta: this.data.pregunta, // Asumiendo que pasaste la pregunta en data
+      alumno: undefined // Asumiendo que pasaste el alumno en data
+    };
+
+    this.testService.crearReportarPregunta(reporte, this.idAsignatura, this.idTest, this.data.pregunta.id).subscribe(
+      response => {
+
+        console.log('Reporte enviado exitosamente', response);
+        this.dialogRef.close(response);
+        Swal.fire('Crear reporte', `Se ha reportado la pregunta con exito`, 'success');
+
+      },
+      error => {
+        console.error('Error al enviar el reporte', error);
+        Swal.fire('Reporte', `Ha ocurrido un error reportando la pregunta`, 'error');
+
+      }
+    );
   }
 
-
-  closeDialog(): void {
+  onNoClick(): void {
     this.dialogRef.close();
   }
+
 
 }

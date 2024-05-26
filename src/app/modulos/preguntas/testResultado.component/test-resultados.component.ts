@@ -43,11 +43,9 @@ export class TestResultadosComponent implements OnInit {
 
 
 
-  openDialog(): void {
+  openDialog(data:any): void {
     const dialogRef = this.dialog.open(CrearReporteComponent,{
-      data: {
-        message: 'Esta aplicación te permite gestionar tus tareas de manera eficiente. Puedes agregar, editar y eliminar tareas, así como asignarles prioridades y fechas límite.'
-      },
+      data: data,
       width: '70%',
       height:'70%'
     });

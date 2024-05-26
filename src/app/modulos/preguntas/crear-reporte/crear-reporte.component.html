@@ -1,20 +1,30 @@
-<form [formGroup]="reporteForm" (ngSubmit)="onSubmit()" class="container mt-3">
-    <div class="mb-3">
-      <label for="texto" class="form-label">Texto:</label>
-      <input formControlName="texto" type="text" class="form-control" id="texto">
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title">Reportar Pregunta</h4>
+      <!-- Eliminar el botón de cierre -->
     </div>
-    <div class="mb-3">
-      <label for="motivo" class="form-label">Motivo:</label>
-      <select formControlName="motivo" class="form-select" id="motivo">
-        <option *ngFor="let motivo of motivoOptions" [value]="motivo">{{getMotivoValue(motivo)}}</option>
-      </select>
+    <div class="modal-body" style="margin-top: 10%;">
+      <p class="fw-bold mb-4">{{data.pregunta.enunciado}}</p>
+      <ul class="list-group mb-4">
+        <li *ngFor="let respuesta of data.pregunta.respuestas" class="list-group-item" [ngClass]="{'list-group-item-success': respuesta.esCorrecta, 'fw-bold': respuesta.esCorrecta}">
+          {{respuesta.texto}} ({{respuesta.esCorrecta ? 'Correcta' : 'Incorrecta'}})
+        </li>
+      </ul>
+      <div class="mb-4">
+        <label for="motivo" class="form-label">Motivo del reporte</label>
+        <select id="motivo" class="form-select" [(ngModel)]="motivo">
+          <option *ngFor="let motivo of motivoOptions" [value]="motivo">{{motivo}}</option>
+        </select>
+      </div>
+      <div class="mb-4">
+        <label for="descripcion" class="form-label">Descripción</label>
+        <textarea id="descripcion" class="form-control" rows="3" [(ngModel)]="texto"></textarea>
+      </div>
     </div>
-    <div class="mb-3">
-      <label for="estado" class="form-label">Estado:</label>
-      <select formControlName="estado" class="form-select" id="estado">
-        <option *ngFor="let estado of estadoOptions" [value]="estado">{{getEstadoValue(estado)}}</option>
-      </select>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="onNoClick()">Cancelar</button>
+      <button type="button" class="btn btn-primary" (click)="submitReport()">Enviar</button>
     </div>
-    <button type="submit" class="btn btn-primary">Enviar</button>
-  </form>
-  
+  </div>
+</div>

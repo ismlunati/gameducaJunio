@@ -177,13 +177,16 @@ export class AnadirLogrosComponent implements OnInit {
     let artefactoLogros: ArtefactoLogro | null = null; // asigna null como valor por defecto
 
 
+
+
+
+
+
     if (selectedArtefacto !== undefined) {
       artefactoLogros = {
-        ...formValues.artefactoLogro // Esto copia los valores de desbloquear y obtener del formulario
+        ...formValues.artefactoLogros // Esto copia los valores de desbloquear y obtener del formulario
       }
       artefactoLogros!.artefacto = selectedArtefacto;
-
-
     }
 
     const logroPost: Logro = {
@@ -192,6 +195,8 @@ export class AnadirLogrosComponent implements OnInit {
       artefactoLogros: artefactoLogros,
       imagen: this.base64Image
     };
+
+
 
 
 
@@ -245,6 +250,12 @@ export class AnadirLogrosComponent implements OnInit {
         this.base64Image = reader.result as string;
       };
     }
+  }
+
+
+  cambiarFotoLogro() {
+    const input = document.getElementById('fotoLogro') as HTMLInputElement;
+    input.click();
   }
 
 }

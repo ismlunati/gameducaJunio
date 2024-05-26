@@ -6,6 +6,7 @@ export interface Perfil{
     idAlumno:number,
     nombreUsuario:string,
     nombreReal:string,
+    nombreVisible:string,
     puntos:number;
     listaLogros:Logro[],
     listaArtefactos:Artefacto[],

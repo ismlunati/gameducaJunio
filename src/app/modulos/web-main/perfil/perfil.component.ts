@@ -6,6 +6,8 @@ import { Asignatura } from '../../asignatura/model/asignatura';
 import { NavService } from '../nav.service';
 import { Perfil } from '../model/perfil.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../../usuario/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-perfil',
@@ -25,12 +27,14 @@ export class PerfilComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<PerfilComponent>,
     private asignaturaService: AsignaturaService,
     private navService: NavService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private authService:AuthService
   ){
 
     this.perfilForm = this.fb.group({
-      nombreUsuario: ['', Validators.required],
+      nombreUsuario: [{value:'', disabled:true}],
       nombreReal: ['', Validators.required],
+      nombreVisible: ['', Validators.required],
       puntos: [{ value: '', disabled: true }],
       listaLogros: [''],
       listaArtefactos:['']
@@ -68,6 +72,7 @@ export class PerfilComponent implements OnInit {
         this.perfilForm.patchValue({
           nombreUsuario: this.perfil.nombreUsuario,
           nombreReal: this.perfil.nombreReal,
+          nombreVisible: this.perfil.nombreVisible,
           puntos: this.perfil.puntos,
           listaLogros: this.perfil.listaLogros,
           listaArtefactos: this.perfil.listaArtefactos
@@ -86,12 +91,21 @@ export class PerfilComponent implements OnInit {
 
   guardarPerfil(){
 
-    const nombreUsuario = this.perfilForm.get('nombreUsuario')?.value;
+    const nombreVisible = this.perfilForm.get('nombreVisible')?.value;
     const nombreReal = this.perfilForm.get('nombreReal')?.value;
 
-    this.navService.editarPerfil(this.asignaturaSeleccionada, nombreUsuario, nombreReal ).subscribe(res=>{
+    this.navService.editarPerfil(this.asignaturaSeleccionada, nombreReal, nombreVisible ).subscribe(res=>{
       console.log("perfil actualizado", res);
-    })
+      this.closeDialog();
+      Swal.fire('Perfil', `Se ha actualizado el perfil con éxito } `, 'success');
+
+    },
+  error=>{
+
+    Swal.fire('Perfil', `Ha ocurrido un error actualizando el perfil } `, 'error');
+
+    
+  })
   }
 
 
@@ -105,6 +119,18 @@ export class PerfilComponent implements OnInit {
       reader.onload = () => {
         this.base64Image = reader.result as string;
       };
+    }
+  }
+
+
+  esProfesor(): boolean {
+
+    if (this.authService.getUserFromSessionStorage()?.roles[0].rolNombre == 'ROLE_ADMIN') {
+
+      return true;
+    } else {
+
+      return false;
     }
   }
 }

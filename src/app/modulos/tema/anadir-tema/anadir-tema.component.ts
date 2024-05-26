@@ -25,9 +25,10 @@ export class AnadirTemaComponent implements OnInit {
   constructor(private fb: UntypedFormBuilder, private asignaturaService: AsignaturaService,
     private route: ActivatedRoute, private authService: AuthService, private router: Router) {
 
+    const isAlumno= !this.esProfesor();
     this.temaForm = this.fb.group({
-      nombre: ['', Validators.required],
-      descripcion:['', Validators.required]
+      nombre: [{value:'', disabled:isAlumno}, Validators.required],
+      descripcion:[{value:'', disabled:isAlumno}, Validators.required]
       // puedes agregar más controles de formularios aquí
     });
   }

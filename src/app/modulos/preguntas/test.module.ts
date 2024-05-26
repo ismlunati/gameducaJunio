@@ -11,6 +11,7 @@ import { TestViewComponent } from './test-view.component';
 import { CrearReporteComponent } from './crear-reporte/crear-reporte.component';
 import { ReportePreguntasComponent } from './reporte-preguntas/reporte-preguntas.component';
 import { preguntasRoutes } from './preguntas-routing.module';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 
@@ -29,7 +30,10 @@ import { preguntasRoutes } from './preguntas-routing.module';
     ReactiveFormsModule,
     RouterModule,
     FormsModule,
-    RouterModule.forChild(preguntasRoutes)
+    RouterModule.forChild(preguntasRoutes),
+    MatDialogModule,
+    FormsModule
+    
   ],
   exports: [
     CreateTestComponent,

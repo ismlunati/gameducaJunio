@@ -2,4 +2,45 @@
     background-color: #007bff;
     border-color: #007bff;
   }
+
+
+  
+  .modal-dialog {
+    max-width: 600px;
+  }
+  
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 20px; /* Separar el título del borde superior */
+  }
+  
+  .modal-title {
+    margin: 0;
+    flex-grow: 1;
+    font-size: 1.5rem; /* Ajuste adicional si se necesita un tamaño específico */
+  }
+  
+  .btn-close {
+    display: none; /* Ocultar el botón de cierre */
+  }
+  
+  .list-group-item-success {
+    background-color: #d4edda;
+    color: #155724;
+  }
+  
+  .fw-bold {
+    font-weight: bold;
+  }
+  
+  .form-label {
+    font-weight: bold;
+  }
+  
+  .modal-footer {
+    display: flex;
+    justify-content: flex-end;
+  }
   
