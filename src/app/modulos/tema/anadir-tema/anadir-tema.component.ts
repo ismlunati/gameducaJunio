@@ -86,12 +86,17 @@ export class AnadirTemaComponent implements OnInit {
         console.log("crearAsignatura")
       }
 
-      this.router.navigate(['/asignaturas', this.idAsignatura, 'temas', 'listado']);
+      
 
     }else {
       console.log("ERror");
     }
 
+  }
+
+
+  navegarListado(){
+    this.router.navigate(['/asignaturas', this.idAsignatura, 'temas', 'listado']);
   }
   crearTema(): void {
 
@@ -100,6 +105,7 @@ export class AnadirTemaComponent implements OnInit {
       .subscribe((asignaturaCreada: Tema) => {
         console.log('Asignatura creada', asignaturaCreada);
         // Aquí podrías redirigir al usuario, actualizar la lista de asignaturas, etc.
+        this.navegarListado();
       });
   }
 
@@ -113,6 +119,7 @@ export class AnadirTemaComponent implements OnInit {
       .subscribe((temaCreado: Tema) => {
         console.log('Tema actualizado', temaCreado);
         // Aquí podrías redirigir al usuario, actualizar la lista de asignaturas, etc.
+        this.navegarListado();
       });
   }
 

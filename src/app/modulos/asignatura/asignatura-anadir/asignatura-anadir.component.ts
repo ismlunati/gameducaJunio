@@ -4,6 +4,7 @@ import { AsignaturaService } from '../asignatura.service';
 import { Asignatura } from '../model/asignatura';
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-asignatura-anadir',
@@ -71,14 +72,21 @@ export class AsignaturaAnadirComponent implements OnInit {
       console.log("crearAsignatura")
     }
 
-    this.router.navigate(['/asignaturas']);
+    
   }
 
+
+  navegarAsignaturas(){
+    this.router.navigate(['/asignaturas']);
+  }
 
   crearAsignatura(): void {
     this.asignaturaService.crearAsignatura(this.asignaturaForm.value)
       .subscribe((asignaturaCreada: Asignatura) => {
         console.log('Asignatura creada', asignaturaCreada);
+        this.navegarAsignaturas();
+        Swal.fire('Asignatura', `Se ha creado la asignatura con exito`, 'success');
+
         // Aquí podrías redirigir al usuario, actualizar la lista de asignaturas, etc.
       });
   }
@@ -92,6 +100,10 @@ export class AsignaturaAnadirComponent implements OnInit {
     this.asignaturaService.actualizarAsignatura(this.asignatura)
       .subscribe((asignaturaCreada: Asignatura) => {
         console.log('Asignatura actualizada', asignaturaCreada);
+        this.navegarAsignaturas();
+        Swal.fire('Asignatura', `Se ha actualizado la asignatura con exito`, 'success');
+
+
         // Aquí podrías redirigir al usuario, actualizar la lista de asignaturas, etc.
       });
   }

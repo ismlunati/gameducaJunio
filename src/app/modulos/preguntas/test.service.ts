@@ -33,6 +33,35 @@ export class TestService {
     return this.http.get<ReportePregunta[]>(`${this.baseUrl}/${idAsignatura}/reportePreguntas`, httpOptions); // Asegúrate de usar tu URL correcta
   }
     
+
+
+  aceptarReporte(idAsignatura: number, idReporte:number): Observable<ReportePregunta> {
+
+    const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
+    
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': `Bearer ${token}`
+      })
+    };
+    
+    return this.http.get<ReportePregunta>(`${this.baseUrl}/${idAsignatura}/reportePreguntas/${idReporte}/aceptar`, httpOptions); // Asegúrate de usar tu URL correcta
+  }
+
+  rechazarReporte(idAsignatura: number, idReporte:number): Observable<ReportePregunta> {
+
+    const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
+    
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': `Bearer ${token}`
+      })
+    };
+    
+    return this.http.get<ReportePregunta>(`${this.baseUrl}/${idAsignatura}/reportePreguntas/${idReporte}/rechazar`, httpOptions); // Asegúrate de usar tu URL correcta
+  }
     
     crearReportarPregunta(reportePregunta: ReportePregunta, idAsignatura: number, idTest: number, idPregunta: number): Observable<any> {
       
@@ -81,7 +110,7 @@ export class TestService {
     }
 
 
-  createTest(testData: Test, selectedPreguntaIds: string, selectedTemasIds: string): Observable<any> {
+  createTest(testData: Test, selectedPreguntaIds: string, selectedTemasIds: string, idAsignatura:number): Observable<any> {
     testData.listaTemas=selectedTemasIds;
     console.log("test posteado", testData)
     const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
@@ -92,13 +121,13 @@ export class TestService {
       }),
       //params: new HttpParams().set('selectedPreguntaIds', selectedPreguntaIds)
     };
-    const fullUrl = `${this.baseUrl}/1/crearTest?selectedPreguntaIds=${selectedPreguntaIds}`;
+    const fullUrl = `${this.baseUrl}/${idAsignatura}/crearTest?selectedPreguntaIds=${selectedPreguntaIds}`;
 
     return this.http.post<any>(fullUrl, testData, httpOptions); // Asegúrate de enviar los datos correctos en 'testData'
   }
 
 
-  getElegiblePreguntas(listaTemas: string): Observable<any> {
+  getElegiblePreguntas(listaTemas: string, idAsignatura:number): Observable<any> {
     const token = sessionStorage.getItem('token');
     const httpOptions = {
       headers: new HttpHeaders({
@@ -106,8 +135,8 @@ export class TestService {
         'Authorization': `Bearer ${token}`
       })
     };
-    console.log(`${this.baseUrl}/1/test/preguntasElegibles?listaTemas=${listaTemas}`);
-    return this.http.get<any>(`${this.baseUrl}/1/test/preguntasElegibles?listaTemas=${listaTemas}`, httpOptions);
+    console.log(`${this.baseUrl}/${idAsignatura}/test/preguntasElegibles?listaTemas=${listaTemas}`);
+    return this.http.get<any>(`${this.baseUrl}/${idAsignatura}/test/preguntasElegibles?listaTemas=${listaTemas}`, httpOptions);
   }
 
 

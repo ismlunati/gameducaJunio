@@ -8,7 +8,7 @@
         <div class="card mb-3">
           <div class="card-body">
             <h4 class="card-title">Pregunta: {{reporte.pregunta?.enunciado}}</h4>
-            <p><strong>Alumno:</strong> {{reporte.alumno?.usuario?.nombre}}</p>
+            <p><strong>Alumno que reporta la pregunta:</strong> {{reporte.alumno?.usuario?.nombre}}</p>
             <ul class="list-group list-group-flush mb-3">
               <li class="list-group-item" *ngFor="let respuesta of reporte.pregunta?.respuestas">
                 {{respuesta.texto}}
@@ -17,6 +17,11 @@
             <p><strong>Respuesta Correcta:</strong> {{getRespuestaCorrecta(reporte?.pregunta?.respuestas)}}</p>
             <p><strong>Estado:</strong> {{reporte.estado}}</p>
             <p><strong>Motivo:</strong> {{reporte.motivo}}</p>
+
+            <div *ngIf="reporte.estado === estadoEnviado" class="mt-3 d-flex gap-2">
+              <button class="btn btn-success" (click)="aceptarReporte(reporte)">Aceptar Reporte</button>
+              <button class="btn btn-danger" (click)="rechazarReporte(reporte)">Rechazar Reporte</button>
+            </div>
           </div>
         </div>
       </div>

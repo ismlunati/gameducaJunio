@@ -1,38 +1,35 @@
-<div class="container mt-4">
-
-  <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1 class="display-4 text-primary title-styled">Lista de Artefactos</h1>
-  </div>
+<div class="container mt-4 ">
+  <div class="card bg-light rounded shadow p-4">
 
 
-  
-
-
-
-
-
-  <div class="row mb-3">
-    <div class="col-md-6">
-      <select class="form-control" [(ngModel)]="listaSeleccionada" (change)="filtrarPorEstado()">
-        <option *ngFor="let lista of listas" [value]="lista">{{lista}}</option>
-      </select>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h1 class="display-4 text-primary title-styled">Lista de Artefactos</h1>
     </div>
-    <div class="col-md-6" *ngIf="listaSeleccionada !=='Tienda'">
-      <select class="form-control" [(ngModel)]="estadoSeleccionado"  (change)="filtrarPorEstado()">
-        <option *ngFor="let estado of estados" [value]="estado">{{getEstadoValor(estado)}}</option>
-      </select>
+
+
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <select class="form-control" [(ngModel)]="listaSeleccionada" (change)="filtrarPorEstado()">
+          <option *ngFor="let lista of listas" [value]="lista">{{lista}}</option>
+        </select>
+      </div>
+      <div class="col-md-6" *ngIf="listaSeleccionada !=='Tienda'">
+        <select class="form-control" [(ngModel)]="estadoSeleccionado" (change)="filtrarPorEstado()">
+          <option *ngFor="let estado of estados" [value]="estado">{{getEstadoValor(estado)}}</option>
+        </select>
+      </div>
     </div>
-  </div>
 
 
-  
 
-    <div class="row">
+
+    <div class="row ">
       <div class="col">
-        <table class="table table-striped" *ngIf="listaSeleccionada ==='Tienda' && artefactos.length>0"> 
+        <table class="table table-striped" *ngIf="listaSeleccionada ==='Tienda' && artefactos.length>0">
           <thead>
             <tr>
-              
+
               <th>Nombre</th>
               <th>Descripcion</th>
               <th>Coste</th>
@@ -47,8 +44,8 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let artefacto of artefactos"  (click)="navegar(artefacto.id)">
-              
+            <tr *ngFor="let artefacto of artefactos" (click)="navegar(artefacto.id)">
+
               <td>{{artefacto.nombre}}</td>
               <td>{{artefacto.descripcion}}</td>
               <td>{{artefacto.costePuntos}}</td>
@@ -58,38 +55,39 @@
               <td>{{artefacto.fechaInicio| date: 'dd/MM/yyyy' }}</td>
               <td>{{artefacto.fechaFin| date: 'dd/MM/yyyy' }}</td>
               <td *ngIf="esProfesor()">
-                <button class="btn btn-outline-danger" (click)="borrarArtefacto(artefacto.id); $event.stopPropagation()">Eliminar</button>
+                <button class="btn btn-outline-danger"
+                  (click)="borrarArtefacto(artefacto.id); $event.stopPropagation()">Eliminar</button>
               </td>
 
               <td *ngIf="!esProfesor()">
-                <button class="btn btn-primary" (click)="comprarArtefacto(artefacto.id); $event.stopPropagation()">Comprar</button>
+                <button class="btn btn-primary"
+                  (click)="comprarArtefacto(artefacto.id); $event.stopPropagation()">Comprar</button>
               </td>
 
-              
+
               <!-- etc., agrega más celdas si necesitas -->
             </tr>
           </tbody>
         </table>
         <div *ngIf="artefactos.length === 0"
-        class="alert alert-info text-center d-flex flex-column justify-content-center align-items-center" role="alert"
-        style="height: 200px;">
-        <div>
-          <h4 class="alert-heading">Información</h4>
-          <p>No hay registros disponibles.</p>
-        </div>
-      </div>
-        <app-listado-artefactos-alumnos
-        [artefactoCompras]="artefactosAlumnoFiltrado"
-        [estadoSeleccionado]="estadoSeleccionado"
-        (recargarDatosLista)="recargarListaArtefactosAlumnos($event)"
-        *ngIf="listaSeleccionada !=='Tienda'"
-        ></app-listado-artefactos-alumnos>
-
-
-          <div class="d-flex gap-2 mt-3">
-            <button class="btn btn-secondary" [routerLink]="['/asignaturas', id]">Volver</button>
-            <button class="btn btn-success" *ngIf="esProfesor()" [routerLink]="['/asignaturas', id, 'artefactos', 'añadir']">Añadir</button>
+          class="alert alert-info text-center d-flex flex-column justify-content-center align-items-center" role="alert"
+          style="height: 200px;">
+          <div>
+            <h4 class="alert-heading">Información</h4>
+            <p>No hay registros disponibles.</p>
           </div>
+        </div>
+        <app-listado-artefactos-alumnos [artefactoCompras]="artefactosAlumnoFiltrado"
+          [estadoSeleccionado]="estadoSeleccionado" (recargarDatosLista)="recargarListaArtefactosAlumnos($event)"
+          *ngIf="listaSeleccionada !=='Tienda'"></app-listado-artefactos-alumnos>
+
+
+        <div class="d-flex gap-2 mt-3">
+          <button class="btn btn-secondary" [routerLink]="['/asignaturas', id]">Volver</button>
+          <button class="btn btn-success" *ngIf="esProfesor()"
+            [routerLink]="['/asignaturas', id, 'artefactos', 'añadir']">Añadir</button>
+        </div>
       </div>
     </div>
   </div>
+</div>

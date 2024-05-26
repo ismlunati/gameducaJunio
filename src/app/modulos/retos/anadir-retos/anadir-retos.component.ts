@@ -8,6 +8,7 @@ import { Asignatura } from 'src/app/modulos/asignatura/model/asignatura';
 import { Logro } from 'src/app/modulos/logros/model/Logro';
 import moment from 'moment';
 import { forkJoin } from 'rxjs';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-anadir-retos',
@@ -177,6 +178,8 @@ export class AnadirRetosComponent implements OnInit {
     this.asignaturaService.crearReto(this.retoForm.value, this.idAsignatura!)
       .subscribe((retoCreado: Reto) => {
         console.log('Reto creada', retoCreado);
+        Swal.fire('Reto', `Se ha creado el reto con exito`, 'success');
+
         // Aquí podrías redirigir al usuario, actualizar la lista de asignaturas, etc.
       });
   }
@@ -190,6 +193,8 @@ export class AnadirRetosComponent implements OnInit {
     this.asignaturaService.actualizarReto(this.reto, this.idAsignatura!)
       .subscribe((retoCreado: Reto) => {
         console.log('Reto actualizado', retoCreado);
+        Swal.fire('Reto', `Se ha actualizado el reto con exito`, 'success');
+
         // Aquí podrías redirigir al usuario, actualizar la lista de asignaturas, etc.
       });
   }

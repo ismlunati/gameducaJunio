@@ -5,6 +5,7 @@ import { Artefacto } from 'src/app/modulos/artefactos/model/Artefacto';
 import { Asignatura } from 'src/app/modulos/asignatura/model/asignatura';
 import { AsignaturaService } from 'src/app/modulos/asignatura/asignatura.service';
 import { AuthService } from 'src/app/modulos/usuario/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-anadir-artefactos',
@@ -128,14 +129,20 @@ export class AnadirArtefactosComponent implements OnInit {
       this.crearArtefacto()
       console.log("crearAsignatura")
     }
-    this.router.navigate(['/asignaturas',this.idAsignatura,'artefactos','listado']);
+    
   }
 
+  navegarListadoArtefactos(){
+    this.router.navigate(['/asignaturas',this.idAsignatura,'artefactos','listado']);
+  }
 
   crearArtefacto(): void {
     this.asignaturaService.crearArtefacto(this.artefactoForm.value,this.idAsignatura!)
       .subscribe((artefacto: Artefacto) => {
         console.log('Artefacto creada', artefacto);
+        this.navegarListadoArtefactos();
+        Swal.fire('Artefacto', `Se ha creado el artefacto con exito`, 'success');
+
         // Aquí podrías redirigir al usuario, actualizar la lista de asignaturas, etc.
       });
   }
@@ -150,6 +157,9 @@ export class AnadirArtefactosComponent implements OnInit {
     this.asignaturaService.actualizarArtefacto(this.artefacto, this.idAsignatura!)
       .subscribe((artefactoActualizado: Artefacto) => {
         console.log('Artefacto actualizado', artefactoActualizado);
+        this.navegarListadoArtefactos();
+        Swal.fire('Artefacto', `Se ha actualizado el artefacto con exito`, 'success');
+
         // Aquí podrías redirigir al usuario, actualizar la lista de asignaturas, etc.
       });
   }

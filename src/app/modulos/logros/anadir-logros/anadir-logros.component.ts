@@ -7,6 +7,7 @@ import { AsignaturaService } from 'src/app/modulos//asignatura/asignatura.servic
 import { ArtefactoLogro } from 'src/app/modulos/artefactos/model/ArtefactoLogro';
 import { Logro } from 'src/app/modulos/logros/model/Logro';
 import { AuthService } from 'src/app/modulos//usuario/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-anadir-logros',
@@ -127,6 +128,10 @@ export class AnadirLogrosComponent implements OnInit {
 
     }
 
+    
+  }
+
+  navegarListadoLogros(){
     this.router.navigate(['/asignaturas', this.idAsignatura, 'logros', 'listado']);
   }
 
@@ -161,6 +166,9 @@ export class AnadirLogrosComponent implements OnInit {
     this.asignaturaService.crearLogro(logroPost, this.idAsignatura!)
       .subscribe((logro: Logro) => {
         console.log('logro creada', logro);
+        this.navegarListadoLogros();
+        Swal.fire('Logro', `Se ha creado el logro con exito`, 'success');
+
         // Aquí podrías redirigir al usuario, actualizar la lista de asignaturas, etc.
       });
   }
@@ -203,6 +211,9 @@ export class AnadirLogrosComponent implements OnInit {
     this.asignaturaService.actualizarLogro(logroPost, this.idAsignatura!)
       .subscribe((logroCreado: Logro) => {
         console.log('Logro actualizado', logroCreado);
+        this.navegarListadoLogros();
+        Swal.fire('Logro', `Se ha actualizado el logro con exito`, 'success');
+
         // Aquí podrías redirigir al usuario, actualizar la lista de asignaturas, etc.
       });
   }

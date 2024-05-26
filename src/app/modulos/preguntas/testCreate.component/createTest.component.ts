@@ -4,8 +4,9 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, UntypedFormArray, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { AsignaturaService } from 'src/app/modulos/asignatura/asignatura.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Tema } from '../../tema/model/Tema';
+import Swal from 'sweetalert2';
 
 
 
@@ -37,7 +38,8 @@ export class CreateTestComponent implements OnInit {
   constructor(private fb: UntypedFormBuilder, 
     private testService: TestService, 
     private asignaturaService: AsignaturaService, 
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private router: Router) {
 
   }
   ngOnInit(): void {
@@ -45,6 +47,7 @@ export class CreateTestComponent implements OnInit {
 
     this.idAsignatura = +this.route.snapshot.parent?.paramMap.get('id')!;
 
+    console.log("idAsignatura", this.idAsignatura);
 
 
     this.testForm = this.fb.group({
@@ -151,9 +154,13 @@ export class CreateTestComponent implements OnInit {
 
 
       const selectedPreguntaIds = this.selectedPreguntas.map(pregunta => pregunta.id).join(',');
-      this.testService.createTest(this.testForm.value, selectedPreguntaIds, selectedTemasIds).subscribe(
+      this.testService.createTest(this.testForm.value, selectedPreguntaIds, selectedTemasIds, this.idAsignatura).subscribe(
         response => {
           console.log('Test creado exitosamente', response);
+          Swal.fire('Test', `Se ha creado el test con exito`, 'success');
+          this.router.navigate(['/asignaturas', this.idAsignatura, 'test', 'listado']);
+
+
           // Puedes añadir más lógica aquí, como redirigir a otra página o mostrar un mensaje de éxito
         },
         error => {
@@ -172,7 +179,7 @@ export class CreateTestComponent implements OnInit {
     if (this.testForm.get('preguntasElegibles')?.value) {
       const listaTemas = this.testForm.get('listaTemas')?.value;
 
-      this.testService.getElegiblePreguntas(this.getSelectedTemasIds()).subscribe(
+      this.testService.getElegiblePreguntas(this.getSelectedTemasIds(), this.idAsignatura).subscribe(
         (preguntasElegibles: any) => {
           // Llena la variable con las preguntas elegibles
           this.elegiblePreguntas = preguntasElegibles;
@@ -224,7 +231,7 @@ export class CreateTestComponent implements OnInit {
 
     if (this.testForm?.get('preguntasElegibles')?.value) {
       const listaTemasValue = this.testForm.get('listaTemas')?.value;
-      this.testService.getElegiblePreguntas(listaTemasValue).subscribe(data => {
+      this.testService.getElegiblePreguntas(listaTemasValue, this.idAsignatura).subscribe(data => {
         this.elegiblePreguntas = data;
       });
     } else {

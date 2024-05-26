@@ -64,7 +64,7 @@ export class CrearPreguntaComponent implements OnInit {
           // Puedes añadir más lógica aquí, como redirigir a otra página o mostrar un mensaje de éxito
           Swal.fire('Crear pregunta', `Se ha creado la pregunta:"  ${respuesta.enunciado} "con exito`, 'success');
 
-          this.router.navigate(['/asignaturas'])
+          this.router.navigate(['/asignaturas', this.idAsignatura,'temas', 'listado'])
 
        } ,
         error:(e)=> {
