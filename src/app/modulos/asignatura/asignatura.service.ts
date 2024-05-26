@@ -29,7 +29,7 @@ export class AsignaturaService {
         'Authorization': `Bearer ${token}`
       })
     };
-    return this.http.get<Asignatura[]>(this.urlApi, httpOptions); // Asegúrate de usar tu URL correcta
+    return this.http.get<Asignatura[]>(this.urlApi, httpOptions); // 
   }
 
 
@@ -44,7 +44,7 @@ export class AsignaturaService {
     };
 
     console.log("entrandod", `${this.urlApi}/${idAsignatura}`)
-    return this.http.get<Asignatura>(`${this.urlApi}/${idAsignatura}`, httpOptions); // Asegúrate de usar tu URL correcta
+    return this.http.get<Asignatura>(`${this.urlApi}/${idAsignatura}`, httpOptions); // 
   }
 
   getAsignaturaListaSolicitudes(idAsignatura: number): Observable<Alumno[]> {
@@ -57,7 +57,7 @@ export class AsignaturaService {
         'Authorization': `Bearer ${token}`
       })
     };
-    return this.http.get<Alumno[]>(`${this.urlApi}/${idAsignatura}/listaSolicitudesPendientes`, httpOptions); // Asegúrate de usar tu URL correcta
+    return this.http.get<Alumno[]>(`${this.urlApi}/${idAsignatura}/listaSolicitudesPendientes`, httpOptions); // 
   }
 
   getAsignaturaPorId(idAsignatura: number): Observable<Asignatura> {
@@ -70,7 +70,7 @@ export class AsignaturaService {
         'Authorization': `Bearer ${token}`
       })
     };
-    return this.http.get<Asignatura>(`${this.urlApi}/${idAsignatura}`, httpOptions); // Asegúrate de usar tu URL correcta
+    return this.http.get<Asignatura>(`${this.urlApi}/${idAsignatura}`, httpOptions); // 
   }
 
   getLogroPorId(idAsignatura: number, idLogro: number): Observable<Logro> {
@@ -83,7 +83,7 @@ export class AsignaturaService {
         'Authorization': `Bearer ${token}`
       })
     };
-    return this.http.get<Logro>(`${this.urlApi}/${idAsignatura}/logrosDTO/${idLogro}`, httpOptions); // Asegúrate de usar tu URL correcta
+    return this.http.get<Logro>(`${this.urlApi}/${idAsignatura}/logrosDTO/${idLogro}`, httpOptions); // 
   }
 
   getTemaPorId(idAsignatura: number, idTema:number): Observable<Tema> {
@@ -96,7 +96,7 @@ export class AsignaturaService {
         'Authorization': `Bearer ${token}`
       })
     };
-    return this.http.get<Tema>(`${this.urlApi}/${idAsignatura}/temas/${idTema}`, httpOptions); // Asegúrate de usar tu URL correcta
+    return this.http.get<Tema>(`${this.urlApi}/${idAsignatura}/temas/${idTema}`, httpOptions); // 
   }
 
 
@@ -111,7 +111,7 @@ export class AsignaturaService {
       })
     };
     console.log(`${this.urlApi}/${idAsignatura}/artefactosDTO/${idArtefacto}`)
-    return this.http.get<Artefacto>(`${this.urlApi}/${idAsignatura}/artefactosDTO/${idArtefacto}`, httpOptions); // Asegúrate de usar tu URL correcta
+    return this.http.get<Artefacto>(`${this.urlApi}/${idAsignatura}/artefactosDTO/${idArtefacto}`, httpOptions); // 
   }
 
   getRetoPorId(idAsignatura: number, idReto:number): Observable<Reto> {
@@ -124,13 +124,13 @@ export class AsignaturaService {
         'Authorization': `Bearer ${token}`
       })
     };
-    return this.http.get<Reto>(`${this.urlApi}/${idAsignatura}/retosDTO/${idReto}`, httpOptions); // Asegúrate de usar tu URL correcta
+    return this.http.get<Reto>(`${this.urlApi}/${idAsignatura}/retosDTO/${idReto}`, httpOptions); // 
   }
 
 
   getTemasPorAsignatura(idAsignatura: number): Observable<Tema[]> {
 
-    const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
+    const token = sessionStorage.getItem('token'); 
     
     const httpOptions = {
       headers: new HttpHeaders({
@@ -138,7 +138,7 @@ export class AsignaturaService {
         'Authorization': `Bearer ${token}`
       })
     };
-    return this.http.get<Tema[]>(`${this.urlApi}/${idAsignatura}/temas`, httpOptions); // Asegúrate de usar tu URL correcta
+    return this.http.get<Tema[]>(`${this.urlApi}/${idAsignatura}/temas`, httpOptions); 
   }
 
 
@@ -154,7 +154,7 @@ export class AsignaturaService {
         'Authorization': `Bearer ${token}`
       })
     };
-    return this.http.get<Artefacto[]>(`${this.urlApi}/${idAsignatura}/artefactosDTO`, httpOptions); // Asegúrate de usar tu URL correcta
+    return this.http.get<Artefacto[]>(`${this.urlApi}/${idAsignatura}/artefactosDTO`, httpOptions); // 
   }
   getArtefactosPorAlumno(idAsignatura: number): Observable<ArtefactoCompraDTO[]> {
 
@@ -166,7 +166,7 @@ export class AsignaturaService {
         'Authorization': `Bearer ${token}`
       })
     };
-    return this.http.get<ArtefactoCompraDTO[]>(`${this.urlApi}/${idAsignatura}/artefactosAlumno`, httpOptions); // Asegúrate de usar tu URL correcta
+    return this.http.get<ArtefactoCompraDTO[]>(`${this.urlApi}/${idAsignatura}/artefactosAlumno`, httpOptions); // 
   }
 
   getLogrosPorAsignatura(idAsignatura: number): Observable<Logro[]> {
@@ -179,7 +179,7 @@ export class AsignaturaService {
         'Authorization': `Bearer ${token}`
       })
     };
-    return this.http.get<Logro[]>(`${this.urlApi}/${idAsignatura}/logrosDTO`, httpOptions); // Asegúrate de usar tu URL correcta
+    return this.http.get<Logro[]>(`${this.urlApi}/${idAsignatura}/logrosDTO`, httpOptions); // 
   }
 
   getRetosPorAsignatura(idAsignatura: number): Observable<Reto[]> {
@@ -192,7 +192,7 @@ export class AsignaturaService {
         'Authorization': `Bearer ${token}`
       })
     };
-    return this.http.get<Reto[]>(`${this.urlApi}/${idAsignatura}/retosDTO`, httpOptions); // Asegúrate de usar tu URL correcta
+    return this.http.get<Reto[]>(`${this.urlApi}/${idAsignatura}/retosDTO`, httpOptions); // 
   }
   getRetosPorAsignaturaUsuario(idAsignatura: number): Observable<AlumnoRetoDTO[]> {
 
@@ -204,7 +204,7 @@ export class AsignaturaService {
         'Authorization': `Bearer ${token}`
       })
     };
-    return this.http.get<AlumnoRetoDTO[]>(`${this.urlApi}/${idAsignatura}/retosDeAsignaturaPorAlumno`, httpOptions); // Asegúrate de usar tu URL correcta
+    return this.http.get<AlumnoRetoDTO[]>(`${this.urlApi}/${idAsignatura}/retosDeAsignaturaPorAlumno`, httpOptions); // 
   }
 
 

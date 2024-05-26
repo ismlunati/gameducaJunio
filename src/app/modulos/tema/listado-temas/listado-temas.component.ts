@@ -46,8 +46,6 @@ export class ListadoTemasComponent implements OnInit {
   recargarTemas(){
     this.asignaturaService.getTemasPorAsignatura(this.id).subscribe(temas => {
       this.temas = temas;
-      console.log("procedo a imprimir los temas",this.temas);
-      //console.log("Estoy imprimiendo el valor de alumno", this.alumno);
     });
   }
 
