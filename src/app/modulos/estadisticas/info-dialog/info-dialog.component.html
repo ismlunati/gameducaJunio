@@ -1,0 +1,12 @@
+<!-- info-dialog.component.html -->
+<div class="modal-header">
+  <h5 class="modal-title">Información</h5>
+  <button type="button" class="close" aria-label="Close" (click)="closeDialog()">
+  </button>
+</div>
+<div class="modal-body">
+  <p>{{ data.message }}</p>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="closeDialog()">Cerrar</button>
+</div>

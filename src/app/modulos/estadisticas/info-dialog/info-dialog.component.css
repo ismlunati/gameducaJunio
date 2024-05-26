@@ -1,0 +1,45 @@
+/* info-dialog.component.css */
+
+/* Estilo para el contenedor de la cabecera del diálogo */
+.modal-header {
+    background-color: #343a40; /* Color más sobrio */
+    color: white;
+    border-bottom: none; /* Quitar el borde inferior */
+    padding: 1rem; /* Aumentar el padding */
+  }
+  
+  /* Estilo para el título del diálogo */
+  .modal-title {
+    font-size: 1.5rem; /* Tamaño de fuente mayor */
+    font-weight: 600;
+  }
+  
+  /* Estilo para el botón de cierre en la cabecera */
+  .close {
+    color: white;
+    opacity: 0.8;
+    font-size: 1.25rem; /* Tamaño de fuente mayor */
+  }
+  .close:hover {
+    color: white;
+    opacity: 1;
+  }
+  
+  /* Estilo para el cuerpo del diálogo */
+  .modal-body {
+    padding: 2rem; /* Aumentar el padding */
+    font-size: 1rem;
+    color: #495057; /* Color de texto más oscuro */
+    background-color: #ffffff; /* Fondo blanco */
+    border-bottom: 1px solid #dee2e6; /* Borde inferior */
+  }
+  
+  /* Estilo para el pie del diálogo */
+  .modal-footer {
+    border-top: none; /* Quitar el borde superior */
+    background-color: #f8f9fa;
+    padding: 1rem; /* Aumentar el padding */
+    display: flex;
+    justify-content: flex-end; /* Alinear el botón a la derecha */
+  }
+  
