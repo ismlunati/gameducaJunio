@@ -1,7 +1,7 @@
 <h1 mat-dialog-title>Perfil de Usuario</h1>
 <div mat-dialog-content>
   <div class="container mt-3">
-    <div class="row justify-content-center">
+    <div *ngIf="!esProfesor()" class="row justify-content-center">
       <div class="col-md-8">
         <div class="form-group">
           <label for="asignatura">Selecciona una asignatura:</label>

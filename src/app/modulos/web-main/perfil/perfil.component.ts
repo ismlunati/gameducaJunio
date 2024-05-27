@@ -52,6 +52,11 @@ export class PerfilComponent implements OnInit {
       //console.log("Estoy imprimiendo el valor de alumno", this.alumno);
     });
     
+
+    if(this.esProfesor()){
+      console.log("obteniendo perfil de profesor")
+      this.buscarPerfil();
+    }
   }
 
   closeDialog(): void {
@@ -64,7 +69,7 @@ export class PerfilComponent implements OnInit {
   }
 
   buscarPerfil() {
-    if (this.asignaturaSeleccionada) {
+    if (this.asignaturaSeleccionada || this.esProfesor()) {
       console.log('Buscando perfil para la asignatura:', this.asignaturaSeleccionada);
       this.navService.getPerfil(this.asignaturaSeleccionada).subscribe(perfil=>{
         this.perfil= perfil;

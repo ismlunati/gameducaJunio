@@ -57,10 +57,14 @@ export class ListadoComponent implements OnInit {
     this.asignaturaService.borrarAsignatura(idAsignatura).subscribe(
       res => {
         console.log('Asignatura borrada exitosamente');
+        Swal.fire('Asignatura', `Se ha borrado la asignatura con éxito } `, 'success');
+
         this.asignaturas = this.asignaturas.filter(asignatura => asignatura.id !== idAsignatura);
         // Actualiza tu vista o haz algo tras la eliminación de la asignatura
       },
       err => {
+        Swal.fire('Asignatura', `No se puede borrar la asignatura porque contiene datos } `, 'error');
+
         console.error('Error borrando la asignatura', err);
       }
     );
