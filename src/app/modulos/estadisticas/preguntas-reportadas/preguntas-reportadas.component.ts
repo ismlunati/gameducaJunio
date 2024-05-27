@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { EstadisticasService } from '../estadisticas.service';
 import { ActivatedRoute } from '@angular/router';
 import { EstadisticasReportesAlumnosDTO } from '../model/EstadisticasReportesAlumnosDTO';
+import { MatDialog } from '@angular/material/dialog';
+import { InfoDialogComponent } from '../info-dialog/info-dialog.component';
+import { InformacionEnum } from '../model/InformacionEnum';
 
 @Component({
   selector: 'app-preguntas-reportadas',
@@ -15,7 +18,7 @@ export class PreguntasReportadasComponent implements OnInit {
   reportesAlumnos!: EstadisticasReportesAlumnosDTO[];
 
   idAsignatura!: number;
-  constructor(private estadisticaService: EstadisticasService, private route: ActivatedRoute) {
+  constructor(private estadisticaService: EstadisticasService, private route: ActivatedRoute, private dialog:MatDialog) {
 
   }
 
@@ -28,6 +31,15 @@ export class PreguntasReportadasComponent implements OnInit {
 
     })
 
+  }
+
+
+  openInfoDialog() {
+    this.dialog.open(InfoDialogComponent, {
+      data: {
+        message: InformacionEnum.PreguntasReportadas
+      }
+    });
   }
 
 }

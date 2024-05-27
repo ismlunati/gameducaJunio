@@ -1,4 +1,16 @@
 <div class="container mt-4">
+  <div class="row">
+    <div class="col-12">
+      <h1 class="text-center mb-4">Creación de TierList</h1>
+    </div>
+    <div class="col-12 text-center mb-4">
+      <button class="btn  d-flex align-items-center justify-content-center" (click)="openInfoDialog()"
+        style="cursor: pointer;">
+        <img src="assets/images/info-5.png" alt="Información" style="width: 30px; height: 30px; margin-right: 8px;">
+        <span>Mostrar Información</span>
+      </button>
+    </div>
+  </div>
   <form [formGroup]="tierListForm" (ngSubmit)="submit()" class="card">
     <div class="card-header">
       <h2 class="card-title">Crear Tier List</h2>

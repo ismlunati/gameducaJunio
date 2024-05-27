@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EstadisticasService } from '../estadisticas.service';
 import { TierList } from '../model/TierList';
+import { InfoDialogComponent } from '../info-dialog/info-dialog.component';
+import { InformacionEnum } from '../model/InformacionEnum';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-tier-list',
@@ -14,7 +17,7 @@ export class TierListComponent implements OnInit{
 
   listaTiers!:TierList[];
 
-  constructor(private estadisticaService: EstadisticasService, private route: ActivatedRoute, private router: Router) {
+  constructor(private estadisticaService: EstadisticasService, private route: ActivatedRoute, private router: Router, private dialog:MatDialog) {
     this.idAsignatura= +this.route.snapshot.parent?.paramMap.get('id')!;
 
 
@@ -41,5 +44,13 @@ export class TierListComponent implements OnInit{
     this.router.navigate(['/asignaturas', this.idAsignatura, 'estadisticas', id, 'configurarTierList']);
   }
 
+
+  openInfoDialog() {
+    this.dialog.open(InfoDialogComponent, {
+      data: {
+        message: InformacionEnum.ListaTierList
+      }
+    });
+  }
 
 }

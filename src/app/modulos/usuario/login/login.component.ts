@@ -53,7 +53,7 @@ export class LoginComponent implements OnInit {
       error=>{
               console.log("error:",error);
 
-              Swal.fire('Error Login',`error: ${error.status}`,'error');
+              Swal.fire('Error de autenticación','El nombre de usuario o la contraseña no coinciden','error');
       }
 
     )

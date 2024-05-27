@@ -1,78 +1,70 @@
 <div class="container mt-4">
   <div class="card bg-light rounded shadow p-4">
-
-  <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1 class="display-4 text-primary title-styled">Lista de Retos</h1>
-  </div>
-
-
-  <div class="row mb-3">
-    <div class="col-md-6">
-      <select class="form-control" [(ngModel)]="listaSeleccionada" (change)="onSelectListChange()">
-        <option *ngFor="let lista of listas" [value]="lista">{{ lista }}</option>
-      </select>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h1 class="display-4 text-primary title-styled">Lista de Retos</h1>
     </div>
-    <div class="col-md-6" *ngIf="listaSeleccionada === 'Retos inscritos' || listaSeleccionada === 'Retos de alumnos' ">
-      <select class="form-control" [(ngModel)]="estadoSeleccionado" (change)="onSelectChange()">
-        <option *ngFor="let estado of estados " [value]="estado">{{ getEstadoReto(estado) }}</option>
-      </select>
-    </div>
-  </div>
 
-
-  
-  
-  <div class="row">
-    <div class="col">
-      <table class="table table-striped" *ngIf="listaSeleccionada ==='Lista retos'">
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Descripción</th>
-            <th>Puntos Otorgados</th>
-            <th>Temporal</th>
-            <th>Fecha de Inicio</th>
-            <th>Fecha de Fin</th>
-            <th>Logro</th>
-            <th *ngIf="esProfesor()">Eliminar</th>
-            <th *ngIf="!esProfesor()">Unirse</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let reto of retosFiltrados" (click)="navegar(reto.id)">
-            <td>{{ reto.nombre }}</td>
-            <td>{{ reto.descripcion }}</td>
-            <td>{{ reto.puntosOtorgados }}</td>
-            <td>{{ reto.temporal? "Sí": "No" }}</td>
-            <td>{{ reto.fechaInicio | date:'yyyy-MM-dd' }}</td>
-            <td>{{ reto.fechaFin  | date:'yyyy-MM-dd'}}</td>
-            <td>{{ reto?.logro?.nombre }}</td>
-            <td *ngIf="esProfesor()">
-              <button class="btn btn-outline-danger" (click)="borrarReto(reto); $event.stopPropagation()">Eliminar</button>
-            </td>
-            <td *ngIf="!esProfesor()">
-              <button class="btn btn-primary" (click)="unirseReto(reto.id, reto.nombre); $event.stopPropagation()">Unirse Reto</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <app-lista-estados *ngIf="listaSeleccionada ==='Retos inscritos'  && !esProfesor()"
-      (recargarRetos)="recargarListaRetos()"
-      [retosAsignados]="retosUsuario"
-      [estadoSeleccionado]="estadoSeleccionado"
-      ></app-lista-estados>
-
-      <app-lista-estados-profesor  *ngIf="listaSeleccionada === 'Retos de alumnos'"
-      (recargarRetos)="recargarListaRetos()"
-      [retosAsignados]="retosUsuarioFiltrados"
-      [estadoSeleccionado]="estadoSeleccionado"
-      
-      ></app-lista-estados-profesor>
-      <div class="d-flex gap-2 mt-3">
-        <button class="btn btn-secondary" [routerLink]="['/asignaturas', id]">Volver</button>
-        <button class="btn btn-success" *ngIf="esProfesor() && listaSeleccionada ==='Lista retos'" [routerLink]="['/asignaturas', id,'retos','añadir']">Añadir</button>
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <select class="form-control" [(ngModel)]="listaSeleccionada" (change)="onSelectListChange()">
+          <option *ngFor="let lista of listas" [value]="lista">{{ lista }}</option>
+        </select>
+      </div>
+      <div class="col-md-6" *ngIf="listaSeleccionada === 'Retos inscritos' || listaSeleccionada === 'Retos de alumnos'">
+        <select class="form-control" [(ngModel)]="estadoSeleccionado" (change)="onSelectChange()">
+          <option *ngFor="let estado of estados" [value]="estado">{{ getEstadoReto(estado) }}</option>
+        </select>
       </div>
     </div>
-  </div>
-</div>
-</div>
+
+    <div class="row">
+      <div class="col">
+        <table class="table table-striped" *ngIf="listaSeleccionada === 'Lista retos'">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Descripción</th>
+              <th>Puntos Otorgados</th>
+              <th>Temporal</th>
+              <th>Fecha de Inicio</th>
+              <th>Fecha de Fin</th>
+              <th>Logro</th>
+              <th *ngIf="esProfesor()">Eliminar</th>
+              <th *ngIf="!esProfesor()">Unirse</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let reto of retosFiltrados" (click)="navegar(reto.id)">
+              <td>{{ reto.nombre }}</td>
+              <td>{{ reto.descripcion }}</td>
+              <td>{{ reto.puntosOtorgados }}</td>
+              <td>{{ reto.temporal ? "Sí" : "No" }}</td>
+              <td>{{ reto.fechaInicio | date:'yyyy-MM-dd' }}</td>
+              <td>{{ reto.fechaFin | date:'yyyy-MM-dd' }}</td>
+              <td>{{ reto?.logro?.nombre }}</td>
+              <td *ngIf="esProfesor()">
+                <button class="btn btn-outline-danger" (click)="borrarReto(reto); $event.stopPropagation()">Eliminar</button>
+              </td>
+              <td *ngIf="!esProfesor()">
+                <button class="btn btn-primary" (click)="unirseReto(reto.id, reto.nombre); $event.stopPropagation()">Unirse Reto</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <app-lista-estados *ngIf="listaSeleccionada === 'Retos inscritos' && !esProfesor()"
+          (recargarRetos)="recargarListaRetos()"
+          [retosAsignados]="retosUsuario"
+          [estadoSeleccionado]="estadoSeleccionado">
+        </app-lista-estados>
+
+        <app-lista-estados-profesor *ngIf="listaSeleccionada === 'Retos de alumnos'"
+          (recargarRetos)="recargarListaRetos()"
+          [retosAsignados]="retosUsuarioFiltrados"
+          [estadoSeleccionado]="estadoSeleccionado">
+        </app-lista-estados-profesor>
+        
+        <div class="d-flex gap-2 mt-3">
+          <button class="btn btn-secondary" [routerLink]="['/asignaturas', id]">Volver</button>
+          <button class="btn btn-success" *ngIf="esProfesor() && listaSeleccionada === 'Lista retos'" [routerLink]="['/asignaturas', id,'retos','añadir']">Añadir</button>
+        </div>
+      </div>

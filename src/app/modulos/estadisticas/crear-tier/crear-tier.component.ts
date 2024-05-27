@@ -3,6 +3,9 @@ import { Component } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, UntypedFormArray } from '@angular/forms';
 import { EstadisticasService } from '../estadisticas.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { InfoDialogComponent } from '../info-dialog/info-dialog.component';
+import { InformacionEnum } from '../model/InformacionEnum';
 
 @Component({
   selector: 'app-tier-list',
@@ -17,7 +20,7 @@ export class CrearTierComponent {
   constructor(private fb: UntypedFormBuilder, 
     private estadisticaService: EstadisticasService, 
     private route: ActivatedRoute,
-    private router: Router) {
+    private router: Router, private dialog:MatDialog) {
 
     this.idAsignatura= +this.route.snapshot.parent?.paramMap.get('id')!;
 
@@ -66,5 +69,14 @@ export class CrearTierComponent {
 
       // Aquí llamarías a tu servicio para enviar los datos a tu backend
     }
+  }
+
+
+  openInfoDialog() {
+    this.dialog.open(InfoDialogComponent, {
+      data: {
+        message: InformacionEnum.CrearTierList
+      }
+    });
   }
 }
