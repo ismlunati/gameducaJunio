@@ -74,7 +74,7 @@ export class AnadirRetosComponent implements OnInit {
       // Aquí va la lógica si existe id
       console.log(`El id es ${this.idAsignatura}`);
 
-      this.crearEditar="Editar"
+      this.crearEditar=this.esProfesor()?"Editar":'';
 
 
 
@@ -170,15 +170,21 @@ export class AnadirRetosComponent implements OnInit {
       console.log("crearReto")
     }
 
-    this.router.navigate(['/asignaturas',this.idAsignatura,'retos','listado']);
   }
 
+
+  navegarListadoRetos(){
+    this.router.navigate(['/asignaturas',this.idAsignatura,'retos','listado']);
+
+  }
 
   crearReto(): void {
     this.asignaturaService.crearReto(this.retoForm.value, this.idAsignatura!)
       .subscribe((retoCreado: Reto) => {
         console.log('Reto creada', retoCreado);
         Swal.fire('Reto', `Se ha creado el reto con exito`, 'success');
+        this.navegarListadoRetos();
+
 
         // Aquí podrías redirigir al usuario, actualizar la lista de asignaturas, etc.
       });
@@ -194,6 +200,7 @@ export class AnadirRetosComponent implements OnInit {
       .subscribe((retoCreado: Reto) => {
         console.log('Reto actualizado', retoCreado);
         Swal.fire('Reto', `Se ha actualizado el reto con exito`, 'success');
+        this.navegarListadoRetos();
 
         // Aquí podrías redirigir al usuario, actualizar la lista de asignaturas, etc.
       });

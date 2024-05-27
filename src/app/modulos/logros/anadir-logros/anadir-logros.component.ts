@@ -76,7 +76,7 @@ export class AnadirLogrosComponent implements OnInit {
     if (this.idLogro !== 0) {
       // Aquí va la lógica si existe id
 
-      this.crearEditar="Editar"
+      this.crearEditar=this.esProfesor()?"Editar":''
       
       forkJoin({
         artefactos:this.asignaturaService.getArtefactosPorAsignatura(this.idAsignatura),

@@ -2,6 +2,7 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Perfil } from './model/perfil.model';
+import { Imagen } from './model/imagen.model';
 
 @Injectable({
   providedIn: 'root'
@@ -47,7 +48,7 @@ export class NavService {
   }
 
 
-  editarPerfil(idAsignatura: number, nombreReal: string, nombreVisible: string): Observable<any> {
+  editarPerfil(idAsignatura: number, nombreReal: string, nombreVisible: string, imagen:Imagen): Observable<any> {
     
     const token = sessionStorage.getItem('token'); 
     const params = {
@@ -55,11 +56,11 @@ export class NavService {
       nombreVisible: nombreVisible
     };
     const headers = new HttpHeaders({
-      'Content-Type': 'application/x-www-form-urlencoded',
+      'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
 
     });
-    return this.http.put(`${this.urlApi}/${idAsignatura}/perfil/editarPerfil`, null, { params, headers });
+    return this.http.put(`${this.urlApi}/${idAsignatura}/perfil/editarPerfil`, imagen, { params, headers });
   }
 
 }

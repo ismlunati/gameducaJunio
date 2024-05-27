@@ -12,7 +12,8 @@
             <th>Descripción</th>
             <th>Nº preguntas</th>
             <th>Temas</th>
-            <th *ngIf="!esProfesor()">Acción</th>
+            <th *ngIf="esProfesor()">Visible</th>
+            <th>Acción</th>
             <!-- Añade más columnas según lo necesites -->
           </tr>
         </thead>
@@ -22,8 +23,11 @@
             <td>{{ test.descripcion }}</td>
             <td>{{ test.numeroPreguntas }}</td>
             <td>{{ test.listaTemas }}</td>
+            <td *ngIf="esProfesor()">{{ test.visible?"Si":"No" }}</td>
             <td>
               <button class="btn btn-primary btn-sm" *ngIf="!esProfesor()" (click)="realizarTest(test.id)">Realizar Test</button>
+              <button class="btn btn-primary btn-sm" *ngIf="esProfesor()" (click)="cambiarVisibilidad(test.id)">Cambiar visibilidad</button>
+
             </td>
             <!-- Añade más celdas según lo necesites -->
           </tr>

@@ -164,6 +164,8 @@ export class CreateTestComponent implements OnInit {
           // Puedes añadir más lógica aquí, como redirigir a otra página o mostrar un mensaje de éxito
         },
         error => {
+          Swal.fire('Test', `Ha ocurrido un error creando el test`, 'error');
+
           console.error('Hubo un error al crear el test', error);
           // Puedes manejar los errores aquí, como mostrar un mensaje de error al usuario
         }

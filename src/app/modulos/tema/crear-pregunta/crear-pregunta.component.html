@@ -3,7 +3,8 @@
     <label for="textoPregunta" class="col-sm-2 col-form-label">Texto Pregunta:</label>
     <div class="col-sm-10">
       <input formControlName="enunciado" type="text" class="form-control" id="textoPregunta" />
-      <small class="text-danger" *ngIf="preguntaForm.get('enunciado')?.touched && preguntaForm.get('enunciado')?.errors">
+      <small class="text-danger"
+        *ngIf="preguntaForm.get('enunciado')?.touched && preguntaForm.get('enunciado')?.errors">
         {{getValidacionEnunciado()}}
       </small>
     </div>
@@ -11,7 +12,8 @@
   <div class="mb-3 row">
     <label for="numRespuestas" class="col-sm-2 col-form-label">Número de Respuestas:</label>
     <div class="col-sm-10">
-      <input formControlName="numRespuestas" type="number" class="form-control" id="numRespuestas" (change)="crearRespuestas()" />
+      <input formControlName="numRespuestas" type="number" class="form-control" id="numRespuestas"
+        (change)="crearRespuestas()" />
     </div>
   </div>
   <div formArrayName="respuestas">
@@ -22,7 +24,7 @@
         <small class="text-danger" *ngIf="respuesta.touched && respuesta.errors">
           <!-- Aquí puedes personalizar tu mensaje de error o usar una función para obtenerlo -->
           {{ getValidacionRespuesta(i) }}
-        </small>     
+        </small>
       </div>
     </div>
   </div>
@@ -30,10 +32,15 @@
     <label for="respuestaCorrecta" class="col-sm-2 col-form-label">Respuesta Correcta:</label>
     <div class="col-sm-10">
       <input formControlName="respuestaCorrecta" type="text" class="form-control" id="respuestaCorrecta" />
-      <small class="text-danger" *ngIf="preguntaForm.get('respuestaCorrecta')?.touched && preguntaForm.get('respuestaCorrecta')?.errors">
+      <small class="text-danger"
+        *ngIf="preguntaForm.get('respuestaCorrecta')?.touched && preguntaForm.get('respuestaCorrecta')?.errors">
         {{getValidacionRespuestaCorrecta()}}
       </small>
     </div>
   </div>
-  <button type="submit" class="btn btn-primary">Crear pregunta</button>
+  <div style="margin-top: 3%;">
+    <button type="submit" class="btn btn-primary">Crear pregunta</button>
+    <button type="button" style="margin-left: 20px;" class="btn btn-secondary "
+      [routerLink]="['/asignaturas', idAsignatura, 'temas', 'listado']">Volver</button>
+  </div>
 </form>

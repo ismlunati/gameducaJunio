@@ -27,12 +27,12 @@
           </small>
         </div>
 
-        <div class="d-flex justify-content-between">
+        <div >
           <button type="submit" class="btn btn-primary " *ngIf="esProfesor()">
             <span *ngIf="idTema !== 0">Actualizar Tema</span>
             <span *ngIf="idTema === 0">Crear Tema</span>
           </button>
-          <button type="button" class="btn btn-secondary " [routerLink]="['/asignaturas', idAsignatura, 'temas', 'listado']">Volver</button>
+          <button type="button" style="margin-left: 20px;" class="btn btn-secondary " [routerLink]="['/asignaturas', idAsignatura, 'temas', 'listado']">Volver</button>
         </div>
       </form>
     </div>

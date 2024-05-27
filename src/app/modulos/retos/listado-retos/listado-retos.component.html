@@ -43,7 +43,7 @@
             <td>{{ reto.nombre }}</td>
             <td>{{ reto.descripcion }}</td>
             <td>{{ reto.puntosOtorgados }}</td>
-            <td>{{ reto.temporal }}</td>
+            <td>{{ reto.temporal? "Sí": "No" }}</td>
             <td>{{ reto.fechaInicio | date:'yyyy-MM-dd' }}</td>
             <td>{{ reto.fechaFin  | date:'yyyy-MM-dd'}}</td>
             <td>{{ reto?.logro?.nombre }}</td>

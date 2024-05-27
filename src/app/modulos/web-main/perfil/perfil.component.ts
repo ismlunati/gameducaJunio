@@ -1,3 +1,4 @@
+import { Imagen } from './../model/imagen.model';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatDialogRef } from '@angular/material/dialog';
@@ -78,6 +79,8 @@ export class PerfilComponent implements OnInit {
           listaArtefactos: this.perfil.listaArtefactos
         });
 
+        this.base64Image=perfil.imagen;
+
 
         console.log("perfilFormPatched", this.perfilForm.value)
 
@@ -94,13 +97,19 @@ export class PerfilComponent implements OnInit {
     const nombreVisible = this.perfilForm.get('nombreVisible')?.value;
     const nombreReal = this.perfilForm.get('nombreReal')?.value;
 
-    this.navService.editarPerfil(this.asignaturaSeleccionada, nombreReal, nombreVisible ).subscribe(res=>{
+    const imagen:Imagen={
+      imagen:this.base64Image
+    };
+console.log("imagen", imagen);
+
+    this.navService.editarPerfil(this.asignaturaSeleccionada, nombreReal, nombreVisible , imagen).subscribe(res=>{
       console.log("perfil actualizado", res);
       this.closeDialog();
       Swal.fire('Perfil', `Se ha actualizado el perfil con éxito } `, 'success');
 
     },
-  error=>{
+        error=>{
+          console.log("error", error)
 
     Swal.fire('Perfil', `Ha ocurrido un error actualizando el perfil } `, 'error');
 

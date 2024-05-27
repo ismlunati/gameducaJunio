@@ -35,6 +35,7 @@
               <th>Coste</th>
               <th>Estado</th>
               <th>Repetible</th>
+              <th>Requiere logro</th>
               <th>Temporal</th>
               <th>Fecha Inicio</th>
               <th>Fecha Fin</th>
@@ -51,7 +52,14 @@
               <td>{{artefacto.costePuntos}}</td>
               <td>{{artefacto.estado}}</td>
               <td>{{artefacto.repetible ? 'Sí' : 'No'}}</td>
-              <td>{{artefacto.temporal? "Sí":"No"}}</td>
+              <td>
+                {{ 
+                  artefacto?.artefactoLogros?.length 
+                    ? (artefacto.artefactoLogros[0]?.desbloquear ? 'Si' : 'No') 
+                    : 'No' 
+                }}
+              </td>
+                            <td>{{artefacto.temporal? "Sí":"No"}}</td>
               <td>{{artefacto.fechaInicio| date: 'dd/MM/yyyy' }}</td>
               <td>{{artefacto.fechaFin| date: 'dd/MM/yyyy' }}</td>
               <td *ngIf="esProfesor()">

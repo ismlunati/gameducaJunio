@@ -1,3 +1,4 @@
+import { AuthService } from 'src/app/modulos/usuario/auth.service';
 import { ReportePregunta } from '../model/ReportePregunta';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -14,12 +15,18 @@ import Swal from 'sweetalert2';
 export class ReportePreguntasComponent implements OnInit {
 
   reportePreguntas: ReportePregunta[] = [];
+  reportePreguntasFiltrada: ReportePregunta[] = [];
+
   idAsignatura!: number;
   estadoEnviado: EstadoReportePregunta = EstadoReportePregunta.ENVIADO;
+  estadoFiltro:string='Todos';
+  listaEstados=['Todos','En curso', 'Finalizados'];
 
 
-
-  constructor(private route: ActivatedRoute, private testService: TestService, private router: Router) {
+  constructor(private route: ActivatedRoute, 
+    private testService: TestService, 
+    private router: Router,
+    private authService:AuthService) {
 
   }
 
@@ -29,6 +36,25 @@ export class ReportePreguntasComponent implements OnInit {
 
 
     this.recargarReportes();
+
+  }
+
+  filtrarPorEstado(){
+
+    if(this.estadoFiltro==='Todos'){
+    this.reportePreguntasFiltrada= this.reportePreguntas;
+    console.log("todos", this.reportePreguntasFiltrada)
+
+    }else if(this.estadoFiltro==='En curso'){
+    this.reportePreguntasFiltrada= this.reportePreguntas.filter(x=> x.estado==EstadoReportePregunta.ENVIADO);
+    console.log("En curso", this.reportePreguntasFiltrada)
+
+  }
+  else if(this.estadoFiltro==='Finalizados'){
+    this.reportePreguntasFiltrada= this.reportePreguntas.filter(x=> x.estado!==EstadoReportePregunta.ENVIADO);
+    console.log("Finalizados", this.reportePreguntasFiltrada)
+
+  }
 
   }
 
@@ -80,5 +106,19 @@ export class ReportePreguntasComponent implements OnInit {
       });
     }
   }
+
+
+
+  esProfesor():boolean{
+
+    if (this.authService.getUserFromSessionStorage()?.roles[0].rolNombre== 'ROLE_ADMIN') {
+
+      return true;
+    } else {
+
+      return false;
+    }
+  }
+
 
 }

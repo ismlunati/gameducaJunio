@@ -2,7 +2,7 @@
     <thead>
         <tr>
             <th>Nombre</th>
-            <th>Logro</th>
+            <th>Puntos otorgados</th>
             <th *ngIf="estadoSeleccionado?.toString() === 'EN_CURSO'"></th>
         </tr>
     </thead>
@@ -10,7 +10,7 @@
         <tr *ngFor="let reto of retosResultado">
             <td>{{ reto.nombre }}</td>
 
-            <td>{{ reto?.logro?.nombre }}</td>
+            <td>{{ reto.puntosOtorgados }}</td>
 
 
             <td *ngIf="estadoSeleccionado?.toString() === 'EN_CURSO'">

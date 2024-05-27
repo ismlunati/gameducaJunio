@@ -5,6 +5,7 @@ import { Asignatura } from 'src/app/modulos/asignatura/model/asignatura';
 import { AsignaturaService } from 'src/app/modulos//asignatura/asignatura.service';
 import { Tema } from 'src/app/modulos/tema/model/Tema';
 import { AuthService } from 'src/app/modulos//usuario/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-anadir-tema',
@@ -46,7 +47,7 @@ export class AnadirTemaComponent implements OnInit {
     if (this.idTema) {
       // Aquí va la lógica si existe id
       console.log(`El id es ${this.idAsignatura}`);
-      this.crearEditar="Editar"
+      this.crearEditar= this.esProfesor()?"Editar":''
 
       this.asignaturaService.getTemaPorId(this.idAsignatura, this.idTema).subscribe(tema => {
         this.tema = tema;
@@ -104,6 +105,8 @@ export class AnadirTemaComponent implements OnInit {
     this.asignaturaService.crearTema(this.temaForm.value, this.idAsignatura!)
       .subscribe((asignaturaCreada: Tema) => {
         console.log('Asignatura creada', asignaturaCreada);
+        Swal.fire('Tema', `Se ha creado el tema con exito`, 'success');
+
         // Aquí podrías redirigir al usuario, actualizar la lista de asignaturas, etc.
         this.navegarListado();
       });
@@ -118,6 +121,8 @@ export class AnadirTemaComponent implements OnInit {
     this.asignaturaService.actualizarTema(this.tema, this.idAsignatura!)
       .subscribe((temaCreado: Tema) => {
         console.log('Tema actualizado', temaCreado);
+        Swal.fire('Tema', `Se ha actualizado el tema con exito`, 'success');
+
         // Aquí podrías redirigir al usuario, actualizar la lista de asignaturas, etc.
         this.navegarListado();
       });

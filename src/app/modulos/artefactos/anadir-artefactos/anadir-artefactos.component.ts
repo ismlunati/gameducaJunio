@@ -69,7 +69,7 @@ export class AnadirArtefactosComponent implements OnInit {
         // Aquí va la lógica si existe id
         console.log(`El id es ${this.idAsignatura}`);
         
-        this.crearEditar="Editar"
+        this.crearEditar=this.esProfesor()?"Editar":'';
 
         this.asignaturaService.getArtefactoPorId(this.idAsignatura,this.idArtefacto).subscribe(artefacto => {
           this.artefacto = artefacto;

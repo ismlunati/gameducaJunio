@@ -87,7 +87,8 @@ export class ListadoRetosComponent implements OnInit {
 
 
   onSelectChange() {
-
+    
+    this.getRetosPorAlumnoAsignatura();
 
     this.retosUsuarioFiltrados = this.retosUsuario
       .map(alumnoReto => {

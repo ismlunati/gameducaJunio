@@ -3,6 +3,7 @@ import { Pregunta } from '../model/Pregunta';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../usuario/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-test-list',
@@ -14,17 +15,21 @@ export class TestListComponent implements OnInit {
   tests: any[] = [];
   pregunta!: Pregunta;
 
-  idAsignatura!:number;
+  idAsignatura!: number;
 
   constructor(private testService: TestService, private router: Router, private route: ActivatedRoute,
-    private authService:AuthService) { }
+    private authService: AuthService) { }
 
   ngOnInit(): void {
 
-    this.idAsignatura= +this.route.snapshot.parent?.paramMap.get('id')!;
+    this.idAsignatura = +this.route.snapshot.parent?.paramMap.get('id')!;
 
     console.log("Test-List.Component: ngOnInit");
-    this.testService.getTests( this.idAsignatura).subscribe(data => {
+    this.recargarTest();
+  }
+
+  recargarTest() {
+    this.testService.getTests(this.idAsignatura).subscribe(data => {
       this.tests = data;
       console.log("Test", this.tests)
     });
@@ -40,7 +45,7 @@ export class TestListComponent implements OnInit {
           console.log("FIIIIIIIIIIIIIIIIIIIN");
         } else {
           console.log("Test-List.Component: respuesta -> Ir a test-pregunta");
-          this.router.navigate(['/asignaturas', this.idAsignatura,'test','test-pregunta', testId]);   
+          this.router.navigate(['/asignaturas', this.idAsignatura, 'test', 'test-pregunta', testId]);
 
         }
       },
@@ -51,10 +56,25 @@ export class TestListComponent implements OnInit {
   }
 
 
-  esProfesor():boolean{
+  cambiarVisibilidad(testId: number) {
+    console.log("Test-List.Component: realizarTest");
+    this.testService.cambiarVisibilidad(this.idAsignatura, testId).subscribe(
+      response => {
+        console.log("cambio visibilidad", response)
+        Swal.fire('Test', `Se ha cambiado la visibilidad del test con exito`, 'success');
+        this.recargarTest();
+      },
+      error => {
+        console.error("Ha ocurrido un error", error);
+      }
+    );
+  }
 
-    if (this.authService.getUserFromSessionStorage()?.roles[0].rolNombre== 'ROLE_ADMIN') {
-      
+
+  esProfesor(): boolean {
+
+    if (this.authService.getUserFromSessionStorage()?.roles[0].rolNombre == 'ROLE_ADMIN') {
+
       return true;
     } else {
 

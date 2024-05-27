@@ -175,6 +175,25 @@ export class TestService {
       );
   }
 
+
+  cambiarVisibilidad(idAsignatura: number, idTest: number): Observable<any> {
+    const token = sessionStorage.getItem('token');
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      })
+    };
+
+    // Construye la URL para obtener los resultados del test
+    const url = `${this.baseUrl}/${idAsignatura}/test/${idTest}/cambiarVisibilidad`;
+
+    // Realiza la solicitud GET y devuelve un Observable
+    return this.http.get<any>(url, httpOptions);
+  }
+
+
+
   getTestResultados(idAsignatura: number, idTest: number): Observable<any> {
     const token = sessionStorage.getItem('token');
     const httpOptions = {
