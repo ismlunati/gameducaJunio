@@ -44,17 +44,14 @@
             </select>
           </div>
 
-
-          <div class="mt-2">
-            <input [disabled]="!esProfesor()" type="file" (change)="onFileSelected($event)" />
-          </div>
-
-          <div class="mt-2">
-            <img *ngIf="base64Image" [src]="base64Image" alt="Imagen del Logro" class="img-thumbnail" style="width: 150px; height: 150px; object-fit: cover; border-radius: 5px;" />
-          </div>
-
+        </div>
+        <div class="mt-2">
+          <input [disabled]="!esProfesor()" type="file" (change)="onFileSelected($event)" />
         </div>
 
+        <div class="mt-2">
+          <img *ngIf="base64Image" [src]="base64Image" alt="Imagen del Logro" class="img-thumbnail" style="width: 150px; height: 150px; object-fit: cover; border-radius: 5px;" />
+        </div>
 
         <div style="margin-top: 3%;">
           <button  type="submit" class="btn btn-primary" *ngIf="esProfesor()">

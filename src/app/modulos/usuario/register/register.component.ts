@@ -25,7 +25,7 @@ export class RegisterComponent {
     this.authService.register(this.registerForm.value).subscribe({
       next: (response) => {
         // Aquí puedes manejar la respuesta si es necesario.
-        console.log('Registrado con éxito y token almacenado.');
+        console.log('Registrado con éxito y token almacenado.', this.registerForm.value);
         Swal.fire('REGISTRO',`Hola ${this.registerForm.controls['nombreUsuario'].value}, se ha registrado con exito`,'success');
         this.router.navigate(['asignaturas']);
       },

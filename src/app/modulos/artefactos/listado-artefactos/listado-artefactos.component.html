@@ -51,7 +51,7 @@
               <td>{{artefacto.costePuntos}}</td>
               <td>{{artefacto.estado}}</td>
               <td>{{artefacto.repetible ? 'Sí' : 'No'}}</td>
-              <td>{{artefacto.temporal}}</td>
+              <td>{{artefacto.temporal? "Sí":"No"}}</td>
               <td>{{artefacto.fechaInicio| date: 'dd/MM/yyyy' }}</td>
               <td>{{artefacto.fechaFin| date: 'dd/MM/yyyy' }}</td>
               <td *ngIf="esProfesor()">

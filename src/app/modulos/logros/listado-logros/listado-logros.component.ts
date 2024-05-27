@@ -64,7 +64,7 @@ export class ListadoLogrosComponent implements OnInit {
 
 
   borrarLogro(logro: Logro): void {
-    this.asignaturaService.borrarLogro(logro.id, this.id).subscribe(
+    this.asignaturaService.borrarLogro(this.id, logro.id).subscribe(
       res => {
         Swal.fire('Borrado', `Se ha borrado el logro ${logro.nombre} con exito`, 'success');
 

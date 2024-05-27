@@ -69,9 +69,7 @@ export class AnadirLogrosComponent implements OnInit {
     this.idLogro = +this.route.snapshot?.paramMap.get('id')!;
 
 
-    this.asignaturaService.getArtefactosPorAsignatura(this.idAsignatura).subscribe(artefactos => {
-      this.artefactosAsignatura = artefactos;
-    });
+
     
     // console.log("artefactos", this.artefactosAsignatura);
 
@@ -81,9 +79,10 @@ export class AnadirLogrosComponent implements OnInit {
       this.crearEditar="Editar"
       
       forkJoin({
+        artefactos:this.asignaturaService.getArtefactosPorAsignatura(this.idAsignatura),
         logro: this.asignaturaService.getLogroPorId(this.idAsignatura, this.idLogro),
-        artefactos:this.asignaturaService.getArtefactosPorAsignatura(this.idAsignatura)
-      }).subscribe(({logro, artefactos})  =>{
+        
+      }).subscribe(({artefactos, logro })  =>{
 
 
         this.artefactosAsignatura = artefactos;
@@ -97,11 +96,14 @@ export class AnadirLogrosComponent implements OnInit {
           artefactoLogros: {
             desbloquear: this.logro?.artefactoLogros?.desbloquear,
             obtener: this.logro?.artefactoLogros?.obtener,
-            artefacto: this.artefactosAsignatura.find(a=> a.id==this.logro.artefactoLogros.artefacto.id)?.id
-            //artefacto: this.logro.artefactoLogros?.artefacto.id
+            //artefacto: this.artefactosAsignatura.find(a=> a.id==this.logro.artefactoLogros.artefacto.id)?.id
+            artefacto: this.logro.artefactoLogros?.artefacto.id
           }
 
         });
+
+        console.log("logro ", this.logroForm.value)
+
 
 
 
@@ -109,8 +111,9 @@ export class AnadirLogrosComponent implements OnInit {
 
 
     } else {
-      // Aquí va la lógica si no existe id
-
+      this.asignaturaService.getArtefactosPorAsignatura(this.idAsignatura).subscribe(artefactos => {
+        this.artefactosAsignatura = artefactos;
+      });
     }
 
 

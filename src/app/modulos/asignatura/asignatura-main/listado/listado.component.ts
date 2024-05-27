@@ -24,6 +24,8 @@ export class ListadoComponent implements OnInit {
       console.log("procedo a imprimir las asignaturas", this.asignaturas);
       //console.log("Estoy imprimiendo el valor de alumno", this.alumno);
     });
+
+    console.log("esProfesor", this.alumno)
   }
 
 
