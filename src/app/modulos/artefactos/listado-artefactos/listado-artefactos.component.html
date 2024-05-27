@@ -54,11 +54,10 @@
               <td>{{artefacto.repetible ? 'Sí' : 'No'}}</td>
               <td>
                 {{ 
-                  artefacto?.artefactoLogros?.length 
-                    ? (artefacto.artefactoLogros[0]?.desbloquear ? 'Si' : 'No') 
-                    : 'No' 
+                  getNecesitaLogro(artefacto)
                 }}
               </td>
+              
                             <td>{{artefacto.temporal? "Sí":"No"}}</td>
               <td>{{artefacto.fechaInicio| date: 'dd/MM/yyyy' }}</td>
               <td>{{artefacto.fechaFin| date: 'dd/MM/yyyy' }}</td>

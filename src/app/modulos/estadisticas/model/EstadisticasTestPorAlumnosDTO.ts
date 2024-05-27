@@ -3,7 +3,7 @@ import { EstadisticasTestTest } from "./EstadisticasTestTest";
 
 export interface EstadisticasTestPorAlumnosDTO {
 
-    alumno:Alumno;
+    nombre:string;
     estadisticas:EstadisticasTestTest[];
     
 

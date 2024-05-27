@@ -14,7 +14,7 @@
       <div class="mb-4">
         <label for="motivo" class="form-label">Motivo del reporte</label>
         <select id="motivo" class="form-select" [(ngModel)]="motivo">
-          <option *ngFor="let motivo of motivoOptions" [value]="motivo">{{motivo}}</option>
+          <option *ngFor="let motivoS of motivoOptions" [value]="motivoS">{{getMotivoString(motivoS)}}</option>
         </select>
       </div>
       <div class="mb-4">
@@ -23,7 +23,7 @@
       </div>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" (click)="onNoClick()">Cancelar</button>
+      <button style="margin-right: 2%;"type="button" class="btn btn-secondary" (click)="onNoClick()">Cancelar</button>
       <button type="button" class="btn btn-primary" (click)="submitReport()">Enviar</button>
     </div>
   </div>

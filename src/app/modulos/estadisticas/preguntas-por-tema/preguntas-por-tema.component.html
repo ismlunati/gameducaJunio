@@ -27,7 +27,7 @@
     <ul class="list-group">
       <li *ngFor="let estadistica of tema.estadisticas" class="list-group-item d-flex justify-content-between align-items-center">
         <div class="col-9">
-          {{ estadistica.alumno.usuario.nombre }}
+          {{ estadistica.nombre }}
         </div>
         <div class="col-3 text-end">
           <span class="badge custom-badge rounded-pill">{{ estadistica.numeroDePreguntas }}</span>

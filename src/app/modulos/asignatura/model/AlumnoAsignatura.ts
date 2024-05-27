@@ -7,6 +7,7 @@ export interface AlumnoAsignatura {
     puntos:number;
     alumno:Alumno;
     asingatura:Asignatura;
+    nombreVisible:string;
 
 
 }

@@ -2,7 +2,7 @@ import { Alumno } from "../../usuario/model/Alumno";
 
 export interface EstadisticasAlumnosPreguntas {
 
-    alumno:Alumno;
+    nombre:string;
     numeroDePreguntas:number;
     
 

@@ -17,10 +17,10 @@ import Swal from 'sweetalert2';
 export class AnadirLogrosComponent implements OnInit {
 
   logroForm: UntypedFormGroup;
- 
+
 
   idAsignatura: number | null = null;
-  crearEditar:string='Crear';
+  crearEditar: string = 'Crear';
   idLogro: number | null = null;
 
   logro!: Logro;
@@ -33,15 +33,15 @@ export class AnadirLogrosComponent implements OnInit {
   constructor(private fb: UntypedFormBuilder, private asignaturaService: AsignaturaService,
     private route: ActivatedRoute, private authService: AuthService, private router: Router) {
 
-    const isAlumno= !this.esProfesor();
+    const isAlumno = !this.esProfesor();
 
     this.logroForm = this.fb.group({
-      nombre: [{ value: '', disabled: isAlumno}, Validators.required],
-      descripcion: [{ value: '', disabled: isAlumno}, Validators.required],
+      nombre: [{ value: '', disabled: isAlumno }, Validators.required],
+      descripcion: [{ value: '', disabled: isAlumno }, Validators.required],
       artefactoLogros: this.fb.group({
         desbloquear: [{ value: false, disabled: true }],
         obtener: [{ value: false, disabled: true }],
-        artefacto: new UntypedFormControl({ value: '', disabled: isAlumno})
+        artefacto: new UntypedFormControl({ value: '', disabled: isAlumno })
       }),
     });
 
@@ -70,25 +70,25 @@ export class AnadirLogrosComponent implements OnInit {
 
 
 
-    
+
     // console.log("artefactos", this.artefactosAsignatura);
 
     if (this.idLogro !== 0) {
       // Aquí va la lógica si existe id
 
-      this.crearEditar=this.esProfesor()?"Editar":''
-      
+      this.crearEditar = this.esProfesor() ? "Editar" : ''
+
       forkJoin({
-        artefactos:this.asignaturaService.getArtefactosPorAsignatura(this.idAsignatura),
+        artefactos: this.asignaturaService.getArtefactosPorAsignatura(this.idAsignatura),
         logro: this.asignaturaService.getLogroPorId(this.idAsignatura, this.idLogro),
-        
-      }).subscribe(({artefactos, logro })  =>{
+
+      }).subscribe(({ artefactos, logro }) => {
 
 
         this.artefactosAsignatura = artefactos;
         this.logro = logro;
 
-        this.base64Image=logro?.imagen;
+        this.base64Image = logro?.imagen;
 
         this.logroForm.patchValue({
           nombre: this.logro.nombre,
@@ -131,19 +131,20 @@ export class AnadirLogrosComponent implements OnInit {
 
     }
 
-    
+
   }
 
-  navegarListadoLogros(){
+  navegarListadoLogros() {
     this.router.navigate(['/asignaturas', this.idAsignatura, 'logros', 'listado']);
   }
 
 
   crearLogro(): void {
+    let mensajeError = '';
 
     const formValues = this.logroForm.value;
 
-    console.log('formValues',formValues)
+    console.log('formValues', formValues)
     const selectedArtefacto = this.artefactosAsignatura.find(artefacto => artefacto.id === +formValues.artefactoLogros.artefacto);
 
 
@@ -164,22 +165,48 @@ export class AnadirLogrosComponent implements OnInit {
       imagen: this.base64Image
     };
 
+    if (!selectedArtefacto) {
+      mensajeError += 'Debe seleccionar un artefacto<br>'
+    }
 
-    //en vez de mandar this.logroForm.value voy a mandar logro
-    this.asignaturaService.crearLogro(logroPost, this.idAsignatura!)
-      .subscribe((logro: Logro) => {
-        console.log('logro creada', logro);
-        this.navegarListadoLogros();
-        Swal.fire('Logro', `Se ha creado el logro con exito`, 'success');
+    if (!(logroPost?.artefactoLogros?.desbloquear || logroPost?.artefactoLogros?.obtener)) {
+      mensajeError += 'Debe seleccionar si el artefacto se obtiene o se desbloquea con el logro<br>'
+    }
 
-        // Aquí podrías redirigir al usuario, actualizar la lista de asignaturas, etc.
-      });
+    if (logroPost?.artefactoLogros?.desbloquear && logroPost?.artefactoLogros?.obtener) {
+      mensajeError += 'No puede marcar obtener y desbloquear a la vez<br>'
+    }
+
+    console.log("mensajeError", mensajeError);
+
+    if (mensajeError.trim.length !== 0) {
+      //en vez de mandar this.logroForm.value voy a mandar logro
+      this.asignaturaService.crearLogro(logroPost, this.idAsignatura!)
+        .subscribe((logro: Logro) => {
+          console.log('logro creada', logro);
+
+          if (logro.id) {
+            this.navegarListadoLogros();
+            Swal.fire('Logro', `Se ha creado el logro con exito`, 'success');
+          }else{
+            Swal.fire('Logro', `No se pueden crear dos logros con el mismo artefacto`, 'error');
+
+
+          }
+          // Aquí podrías redirigir al usuario, actualizar la lista de asignaturas, etc.
+        });
+    } else {
+
+      Swal.fire('Logro', mensajeError, 'warning');
+    }
+
   }
 
 
 
 
   actualizarLogro(): void {
+    let mensajeError = '';
     //Object.assign(this.logro, this.logroForm.value);
 
     const formValues = this.logroForm.value;
@@ -211,14 +238,37 @@ export class AnadirLogrosComponent implements OnInit {
 
 
 
-    this.asignaturaService.actualizarLogro(logroPost, this.idAsignatura!)
-      .subscribe((logroCreado: Logro) => {
-        console.log('Logro actualizado', logroCreado);
-        this.navegarListadoLogros();
-        Swal.fire('Logro', `Se ha actualizado el logro con exito`, 'success');
+    if (!selectedArtefacto) {
+      mensajeError += 'Debe seleccionar un artefacto<br>'
+    }
 
-        // Aquí podrías redirigir al usuario, actualizar la lista de asignaturas, etc.
-      });
+    if (!(logroPost?.artefactoLogros?.desbloquear || logroPost?.artefactoLogros?.obtener)) {
+      mensajeError += 'Debe seleccionar si el artefacto se obtiene o se desbloquea con el logro<br>'
+    }
+
+    if (logroPost?.artefactoLogros?.desbloquear && logroPost?.artefactoLogros?.obtener) {
+      mensajeError += 'No puede marcar obtener y desbloquear a la vez<br>'
+    }
+
+    if (mensajeError.trim.length !== 0) {
+      this.asignaturaService.actualizarLogro(logroPost, this.idAsignatura!)
+        .subscribe((logroCreado: Logro) => {
+          console.log('Logro actualizado', logroCreado);
+          if (logroCreado.id) {
+            this.navegarListadoLogros();
+            Swal.fire('Logro', `Se ha creado el logro con exito`, 'success');
+          }else{
+            Swal.fire('Logro', `No se pueden crear dos logros con el mismo artefacto`, 'error');
+
+
+          }
+          // Aquí podrías redirigir al usuario, actualizar la lista de asignaturas, etc.
+        });
+    } else {
+
+      Swal.fire('Logro', mensajeError, 'warning');
+    }
+
   }
 
   esProfesor(): boolean {
@@ -234,20 +284,20 @@ export class AnadirLogrosComponent implements OnInit {
 
 
 
-  getValidacionNombre():string{
-    let resultado:string="";
+  getValidacionNombre(): string {
+    let resultado: string = "";
 
-    if(this.logroForm.get('nombre')?.errors?.required){
-      resultado="Debe introducir un nombre del logro";     
+    if (this.logroForm.get('nombre')?.errors?.required) {
+      resultado = "Debe introducir un nombre del logro";
     }
     return resultado;
   }
 
-  getValidacionDescripcion():string{
-    let resultado:string="";
-    
-    if(this.logroForm.get('descripcion')?.errors?.required){
-      resultado="Debe introducir una descripcion del logro";
+  getValidacionDescripcion(): string {
+    let resultado: string = "";
+
+    if (this.logroForm.get('descripcion')?.errors?.required) {
+      resultado = "Debe introducir una descripcion del logro";
     }
     return resultado;
   }

@@ -20,7 +20,7 @@ export class CrearReporteComponent implements OnInit {
   idPregunta!:number;
 
   reporteForm: UntypedFormGroup;
-  motivoOptions = Object.keys(MotivoReportePregunta);
+  motivoOptions = Object.keys(MotivoReportePregunta) as Array<keyof typeof MotivoReportePregunta>;
   motivo!:MotivoReportePregunta;
   texto:string='';
 
@@ -89,5 +89,9 @@ export class CrearReporteComponent implements OnInit {
     this.dialogRef.close();
   }
 
+
+  getMotivoString(motivo: keyof typeof MotivoReportePregunta): string {
+    return MotivoReportePregunta[motivo];
+  }
 
 }

@@ -189,4 +189,15 @@ export class ListadoArtefactosComponent implements OnInit {
     }
   }
 
+
+  getNecesitaLogro(artefacto: Artefacto) {
+    let respuesta = "no";
+    if (artefacto.artefactoLogros && artefacto.artefactoLogros.length > 0 && artefacto.artefactoLogros[0].desbloquear) {
+      respuesta = "si";
+    }
+
+    return respuesta;
+
+  }
+
 }
