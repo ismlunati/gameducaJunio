@@ -167,7 +167,7 @@ export class AnadirRetosComponent implements OnInit {
     } else {
 
       this.crearReto()
-      console.log("crearReto")
+      console.log("crearReto", this.retoForm.value)
     }
 
   }

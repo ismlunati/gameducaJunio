@@ -72,6 +72,7 @@ export class ReportePreguntasComponent implements OnInit {
       this.reportePreguntas = reportePreguntas;
 
       console.log("procedo a imprimir las reportes pregunta", reportePreguntas);
+      this.filtrarPorEstado();
       //console.log("Estoy imprimiendo el valor de alumno", this.alumno);
     });
   }
