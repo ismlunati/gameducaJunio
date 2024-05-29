@@ -1,7 +1,8 @@
-<table class="table table-striped" *ngIf="retosResultado.length != 0">
+<table class="table table-striped" *ngIf="retosResultado?.length != 0">
     <thead>
         <tr>
             <th>Nombre</th>
+            <th>Descripción</th>
             <th>Puntos otorgados</th>
             <th *ngIf="estadoSeleccionado?.toString() === 'EN_CURSO'"></th>
         </tr>
@@ -9,6 +10,7 @@
     <tbody>
         <tr *ngFor="let reto of retosResultado">
             <td>{{ reto.nombre }}</td>
+            <td>{{ reto.descripcion }}</td>
 
             <td>{{ reto.puntosOtorgados }}</td>
 

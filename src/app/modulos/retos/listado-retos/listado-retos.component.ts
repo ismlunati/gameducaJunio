@@ -89,7 +89,8 @@ export class ListadoRetosComponent implements OnInit {
   }
 
   onSelectListChange() {
-    this.filtrarRetosPorEstado();
+    //this.filtrarRetosPorEstado();
+    this.getRetosPorAlumnoAsignatura();
   }
 
   onSelectChange() {
